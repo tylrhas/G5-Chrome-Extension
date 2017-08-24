@@ -1,6 +1,4 @@
 chrome.storage.sync.get('poikey',function(obj){
-//ToDO
-//Store API Key In chrome extension
 search_radius = prompt("Enter Search search radius in Miles ( Max is 3 Miles)", "1");
 
 // max search radius is about three miles
