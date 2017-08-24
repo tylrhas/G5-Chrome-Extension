@@ -1,3 +1,5 @@
+//ToDO
+//Store API Key In chrome extension
 search_radius = prompt("Enter Search search radius in Miles ( Max is 3 Miles)", "1");
 
 // max search radius is about three miles
@@ -10,7 +12,7 @@ search_radius_meters_whole = Math.round(search_radius_meters);
 locationLatitude = $("#location_latitude").val();
 locationLongitude = $("#location_longitude").val();
 
-apiKey = "AIzaSyBjoiu0ay7yIbj7x92gtZlAhKMocAeC5ek";
+apiKey = "";
 
 activitiesInputRange = $(0, 4);
 entertainmentInputRange = $(5, 9);
