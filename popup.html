@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <link rel="stylesheet" href="bootstrap/bootstrap.min.css">
+      <link rel="stylesheet" href="bootstrap/bootstrap-theme.min.css">
+      <style>
+        .tab-content>.tab-pane {
+    padding: 20px;
+        }
+    </style>
+  </head>
+  <body style="width: 300px">
+
+      <ul class="nav nav-tabs">
+          <li class="active"><a data-toggle="tab" href="#functions">Functions</a></li>
+          <li><a data-toggle="tab" href="#settings">Settings</a></li>
+        </ul>
+
+
+<div class="tab-content">
+    <div id="functions" class="tab-pane fade in active">
+        <button class="btn" id="hubpoi">Hub Places Of Interest</button>
+    </div>
+    <div id="settings" class="tab-pane fade">
+        <form>
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="textinput">Places API Key</label>  
+                <div class="col-md-4">
+                <input id="poikey" name="poikey" type="text" placeholder="poikey" class="form-control input-md">
+                <span class="help-block">The API key for Google Places API</span>  
+                </div>
+              </div>
+          </form>
+          <button class="btn btn-success" id="save">Save</button>
+    </div>
+  </div>
+    <script type="text/javascript" src="jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="bootstrap/bootstrap.min.js"></script>
+    <script type="text/javascript" src="popup.js"></script>
+  </body>
+</html>
+

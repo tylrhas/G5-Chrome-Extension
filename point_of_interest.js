@@ -1,3 +1,4 @@
+chrome.storage.sync.get('poikey',function(obj){
 //ToDO
 //Store API Key In chrome extension
 search_radius = prompt("Enter Search search radius in Miles ( Max is 3 Miles)", "1");
@@ -12,7 +13,7 @@ search_radius_meters_whole = Math.round(search_radius_meters);
 locationLatitude = $("#location_latitude").val();
 locationLongitude = $("#location_longitude").val();
 
-apiKey = "";
+apiKey = obj.poikey;
 
 activitiesInputRange = $(0, 4);
 entertainmentInputRange = $(5, 9);
@@ -167,3 +168,12 @@ function get_location_address(location, apiKey, inputNumber, placed_locations) {
         }
     }
 }
+
+});
+
+// get info from content script
+
+// debugging
+console.log(search_radius);
+console.log(search_radius_meters);
+console.log(search_radius_meters_whole);

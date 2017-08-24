@@ -1,57 +1,38 @@
-// Auto Fill the POI in the Hub
-search_radius = prompt("Enter Search search radius in Miles ( Max is 3 Miles)","1");
+// var app = chrome.runtime.getBackgroundPage();
 
-// max search radius is about three miles
-if(search_radius > 3){
-  search_radius = 3;
+function hub_poi() {
+    chrome.tabs.executeScript({ file: "jquery-3.2.1.min.js" }, function() {
+      chrome.tabs.executeScript({ file: "point_of_interest.js" });
+  });
 }
-search_radius_meters = search_radius * 1609.34 ;
-search_radius_meters_whole = Math.round(search_radius_meters)
+//hubPOI script
+document.getElementById('hubpoi').addEventListener('click', hub_poi);
 
-apiKey = "AIzaSyDhhgdOUDf2vvIwACZMjiOth_HLwb38w_s";
-url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=44.0559514,-121.2990006&radius="+search_radius_meters_whole+"&type=restaurantt&rankby=prominence&key="+apiKey;
-console.log(url);
+document.getElementById('hubpoi').addEventListener('click', hub_poi);
 
-foodDrink = httpGet(url);
-  foodDrinkJSON = JSON.parse(foodDrink);
-
-  //first location JSON
-  FoodDrink1PlaceId = foodDrinkJSON['results'][0]['place_id'];
-  console.log(FoodDrink1PlaceId);
-  FoodDrink1PlaceName = foodDrinkJSON['results'][0]['name'];
-  FoodDrink1PlaceAddress = foodDrinkJSON['results'][0]['name'];
-  FoodDrink1PlaceCity = foodDrinkJSON['results'][0]['name'];
-  FoodDrink1PlaceState = foodDrinkJSON['results'][0]['name'];
-  FoodDrink1PlaceZip = foodDrinkJSON['results'][0]['name'];
-  FoodDrink1PlaceLat = foodDrinkJSON['results'][0]['geometry']['location']['lat'];
-  FoodDrink1PlaceLong = foodDrinkJSON['results'][0]['geometry']['location']['lng'];
+//set the input value
+chrome.storage.sync.get('poikey',function(obj){
+  console.log(obj);
+  $('#poikey').val(obj.poikey);
+});
 
 
 
-//set values of the food drink
-document.getElementById("place_id_10").value = FoodDrink1PlaceId;
-
-
-
-console.log(foodDrinkJSON['results']);
-
-function httpGet(url)
-{
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open( "GET", url, false ); // false for synchronous request
-    xmlHttp.send( null );
-    return xmlHttp.responseText;
+$(function() {
+  $('#save').click(function(){
+// Get a value saved in a form.
+var theValue = $('#poikey').val();
+console.log(theValue);
+// Check that there's some code there.
+if (!theValue) {
+  console.log('Error: No value specified');
+  return;
 }
+// Save it using the Chrome extension storage API.
+chrome.storage.sync.set({'poikey': theValue}, function() {
+  // Notify that we saved.
+  console.log('Settings saved');
+});
 
-function get_food_drink(){
-
-}
-
-
-
-// get info from content script
-
-// debugging
-console.log(search_radius);
-console.log(search_radius_meters);
-console.log(search_radius_meters_whole);
+  });
+});
