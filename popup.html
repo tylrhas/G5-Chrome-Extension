@@ -1,42 +1,68 @@
 <!DOCTYPE html>
 <html>
-  <head>
-      <link rel="stylesheet" href="bootstrap/bootstrap.min.css">
-      <link rel="stylesheet" href="bootstrap/bootstrap-theme.min.css">
-      <style>
-        .tab-content>.tab-pane {
-    padding: 20px;
-        }
-    </style>
-  </head>
-  <body style="width: 300px">
 
-      <ul class="nav nav-tabs">
-          <li class="active"><a data-toggle="tab" href="#functions">Functions</a></li>
-          <li><a data-toggle="tab" href="#settings">Settings</a></li>
-        </ul>
+<head>
+  <link rel="stylesheet" href="bootstrap/bootstrap.min.css">
+  <link rel="stylesheet" href="bootstrap/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="styles/popup.css">
+</head>
 
-
-<div class="tab-content">
-    <div id="functions" class="tab-pane fade in active">
-        <button class="btn" id="hubpoi">Hub Places Of Interest</button>
-    </div>
-    <div id="settings" class="tab-pane fade">
-        <form>
-            <div class="form-group">
-                <label class="col-md-4 control-label" for="textinput">Places API Key</label>  
-                <div class="col-md-4">
-                <input id="poikey" name="poikey" type="text" placeholder="poikey" class="form-control input-md">
-                <span class="help-block">The API key for Google Places API</span>  
-                </div>
-              </div>
-          </form>
-          <button class="btn btn-success" id="save">Save</button>
+<body style="width: 500px">
+  <div class="row titlerow">
+    <div class="container">
+      <h4>G5 Bookmarklets</h4>
     </div>
   </div>
-    <script type="text/javascript" src="jquery-3.2.1.min.js"></script>
-    <script type="text/javascript" src="bootstrap/bootstrap.min.js"></script>
-    <script type="text/javascript" src="popup.js"></script>
-  </body>
-</html>
+<div class="col-xs-4 no-padding">
+  <ul class="nav nav-stacked">
+    <li class="active"><a data-toggle="tab" href="#wcs">WCS</a></li>
+    <li><a data-toggle="tab" href="#dev">Dev/Support</a></li>
+    <li><a data-toggle="tab" href="#settings">Settings</a></li>
+  </ul>
+  <div class="author">
+  <p>Extension by :<br/> Tyler Hasenoehrl</p>
+  <p>Bookmarklets by :<br/> Cody Swartz & Tyler Hasenoehrl</p>
+  </div>
+</div>
 
+  <div class="tab-content col-xs-8">
+
+    <div id="wcs" class="tab-pane fade in active">
+      <div class="row">
+        <button class="btn" id="hubpoi">Hub Places Of Interest</button>
+      </div>
+      <div class="row">
+        <button class="btn" id="redirects">Auto Redirects</button>
+      </div>
+      <div class="row">
+        <button class="btn" id="wysiwyg">WYSIWYG 3 in 1</button>
+      </div>
+      <div class="row">
+        <button class="btn" id="seo">SEO Updater</button>
+      </div>
+
+
+    </div>
+
+    <div id="dev" class="tab-pane fade in">
+      <h5>Dev / Support Functions Coming Soon</h5>
+    </div>
+
+    <div id="settings" class="tab-pane fade">
+      <form>
+        <div class="form-group">
+          <label class="col-md-4 control-label" for="textinput">Google Places API Key</label>
+          <div class="col-md-4">
+            <input id="poikey" name="poikey" type="text" placeholder="poikey" class="form-control input-md">
+          </div>
+        </div>
+      </form>
+      <button class="btn btn-success" id="save">Save</button>
+    </div>
+  </div>
+  <script type="text/javascript" src="/scripts/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="bootstrap/bootstrap.min.js"></script>
+  <script type="text/javascript" src="popup.js"></script>
+</body>
+
+</html>
