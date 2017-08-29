@@ -1,16 +1,4 @@
 // var app = chrome.runtime.getBackgroundPage();
-
-//js for vertical nav tabs
-
-  $("div.bhoechie-tab-menu>div.list-group>a").click(function(e) {
-      e.preventDefault();
-      $(this).siblings('a.active').removeClass("active");
-      $(this).addClass("active");
-      var index = $(this).index();
-      $("div.bhoechie-tab>div.bhoechie-tab-content").removeClass("active");
-      $("div.bhoechie-tab>div.bhoechie-tab-content").eq(index).addClass("active");
-  });
-
 function hub_poi() {
     chrome.tabs.executeScript({ file: "scripts/jquery-3.2.1.min.js" }, function() {
       chrome.tabs.executeScript({ file: "functions/point_of_interest.js" });
@@ -24,11 +12,9 @@ function redirects(){
 }
 
 function wysiwyg(){
-  console.log('we sending');
   chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
     chrome.tabs.sendMessage(tabs[0].id, {action: "open_dialog_box"}, function(response) {
       console.log(response);
-
     });  
 });
 }
@@ -38,12 +24,31 @@ function seo(){
       chrome.tabs.executeScript({ file: "functions/seo_updater.js" });
   });
 }
+function structured_data(){
+  chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
+    var currentURL = tabs[0].url;
+    var url = 'https://developers.google.com/webmasters/structured-data/testing-tool/?url='+ currentURL;
+    chrome.tabs.create({url:url});    
+});
+}
 
-//hubPOI script
+function sidekiq(){
+  chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
+    var currentURL = tabs[0].url;
+    // https://stackoverflow.com/questions/3689423/google-chrome-plugin-how-to-get-domain-from-url-tab-url
+    var domain = currentURL.match(/^[\w-]+:\/{2,}\[?[\w\.:-]+\]?(?::[0-9]*)?/)[0];
+    var url = domain + '/sidekiq';
+    chrome.tabs.create({url:url});   
+});
+}
+
+//event listeners
 document.getElementById('hubpoi').addEventListener('click', hub_poi);
 document.getElementById('redirects').addEventListener('click', redirects);
 document.getElementById('wysiwyg').addEventListener('click', wysiwyg);
 document.getElementById('seo').addEventListener('click', seo);
+document.getElementById('structured_data').addEventListener('click', structured_data);
+document.getElementById('sidekiq').addEventListener('click', sidekiq);
 
 
 
@@ -54,7 +59,7 @@ chrome.storage.sync.get('poikey',function(obj){
 });
 
 
-
+//save function
 $(function() {
   $('#save').click(function(){
 // Get a value saved in a form.

@@ -28,5 +28,7 @@
     "persistent": false
   },
 
-  "web_accessible_resources": ["scripts/wysiwyg-script.js"]
+  "web_accessible_resources": [
+    "scripts/wysiwyg-script.js"
+  ]
 }
