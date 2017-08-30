@@ -41,6 +41,13 @@ function sidekiq(){
     chrome.tabs.create({url:url});   
 });
 }
+function copy(){
+chrome.tabs.executeScript({ file: "scripts/jquery-3.2.1.min.js" }, function() {
+  chrome.tabs.executeScript({ file: "scripts/jquery-ui.js" }, function() {
+      chrome.tabs.executeScript({ file: "functions/starter_copy.js" });
+  });
+  });
+}
 
 //event listeners
 document.getElementById('hubpoi').addEventListener('click', hub_poi);
@@ -49,6 +56,7 @@ document.getElementById('wysiwyg').addEventListener('click', wysiwyg);
 document.getElementById('seo').addEventListener('click', seo);
 document.getElementById('structured_data').addEventListener('click', structured_data);
 document.getElementById('sidekiq').addEventListener('click', sidekiq);
+document.getElementById('copy').addEventListener('click', copy);
 
 
 
