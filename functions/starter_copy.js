@@ -42,9 +42,8 @@ chrome.storage.sync.get('poikey', function (obj) {
                         searchTerm: "library"
                     }
                 ]
-
+            }
             },
-
             init: function () {
                 this.pageWrapper = $('#wrapper');
                 this.locationLandmark2Name = $('#location_landmark_2_name');
@@ -69,12 +68,15 @@ chrome.storage.sync.get('poikey', function (obj) {
 
             },
             getTerm: function () {
-                $.each(this.SearchTerms, function (i, liquidVariableEach) {
-                    Startercopy.currentLiquid = liquidVariableEach;
+                $.each(this.SearchTerms, function (i, liquidVariable) {
+                    Startercopy.currentLiquid = liquidVariable;
                     Startercopy.currentLiquidIndex = i;
+                    console.log(liquidVariable);
                     $.each(liquidVariable, function (i2, searchInfoEach) {
-                        Startercopy.searchTerm = searchInfoEach.searchTerm;
-                        Startercopy.numberNeeded = searchInfoEach.numberNeeded;
+                        console.log('searchInfoEach');
+                        console.log(searchInfoEach);
+                        //Startercopy.searchTerm = searchInfoEach.searchTerm;
+                        //Startercopy.numberNeeded = searchInfoEach.numberNeeded;
                         Startercopy.buildURL();
                     });
                 });
@@ -83,7 +85,6 @@ chrome.storage.sync.get('poikey', function (obj) {
                 this.url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + this.locationLatitude + "," + this.locationLongitude +
                     "&radius=" + this.search_radius_meters_whole + "&type=" + this.searchTerm + "&rankby=prominence&key=" + this.chromePlacesApiKey;
                 console.log(this.url);
-                return;
                 //this.httpGet();
             },
             httpGet: function () {
@@ -134,6 +135,5 @@ chrome.storage.sync.get('poikey', function (obj) {
                 });
             }
         }
-    }
     Startercopy.init();
 });
