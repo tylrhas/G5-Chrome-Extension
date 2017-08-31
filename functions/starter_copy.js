@@ -83,7 +83,7 @@ chrome.storage.sync.get('poikey', function (obj) {
                 this.url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + this.locationLatitude + "," + this.locationLongitude +
                     "&radius=" + this.search_radius_meters_whole + "&type=" + this.searchTerm + "&rankby=prominence&key=" + this.chromePlacesApiKey;
                 console.log(this.url);
-                return
+                return;
                 //this.httpGet();
             },
             httpGet: function () {
@@ -134,6 +134,6 @@ chrome.storage.sync.get('poikey', function (obj) {
                 });
             }
         }
+    }
     Startercopy.init();
-    
-    });
+});
