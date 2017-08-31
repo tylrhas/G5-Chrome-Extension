@@ -24,8 +24,13 @@ function seo(){
       chrome.tabs.executeScript({ file: "functions/seo_updater.js" });
   });
 }
+function alt(){
+  chrome.tabs.executeScript({ file: "scripts/jquery-3.2.1.min.js" }, function() {
+      chrome.tabs.executeScript({ file: "functions/auto_alt.js" });
+  });
+}
 function structured_data(){
-  chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
+  chrome.tabs.query({active: true, currentWindow: truegirt }, function(tabs){
     var currentURL = tabs[0].url;
     var url = 'https://developers.google.com/webmasters/structured-data/testing-tool/?url='+ currentURL;
     chrome.tabs.create({url:url});    
@@ -56,7 +61,8 @@ document.getElementById('wysiwyg').addEventListener('click', wysiwyg);
 document.getElementById('seo').addEventListener('click', seo);
 document.getElementById('structured_data').addEventListener('click', structured_data);
 document.getElementById('sidekiq').addEventListener('click', sidekiq);
-document.getElementById('copy').addEventListener('click', copy);
+//document.getElementById('copy').addEventListener('click', copy);
+document.getElementById('alt').addEventListener('click', alt);
 
 
 
