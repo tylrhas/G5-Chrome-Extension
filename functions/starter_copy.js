@@ -16,6 +16,7 @@ chrome.storage.sync.get("poikey", function (obj) {
             placedLocations: null,
             excludeFound: false,
             currentLocation: null,
+            currentNumber: null,
             currentSearchTerm: null,
             currentLiquid: null,
             currentLiquidIndex: null,
@@ -64,9 +65,6 @@ chrome.storage.sync.get("poikey", function (obj) {
                     this.search_radius_meters_whole = Math.round(search_radius_meters);
                     this.getTerm();
                 },
-                getSearchResults: function () {
-    
-                },
                 getTerm: function () {
                     $.each(this.SearchTerms, function (i, liquidVariable) {
                         Startercopy.currentLiquid = liquidVariable;
@@ -82,6 +80,8 @@ chrome.storage.sync.get("poikey", function (obj) {
                     this.url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + this.locationLatitude + "," + this.locationLongitude +
                         "&radius=" + this.search_radius_meters_whole + "&type=" + this.searchTerm + "&rankby=prominence&key=" + this.chromePlacesApiKey;
                     console.log(this.url);
+                                                //Set current number to 1
+                            Startercopy.currentNumber = 1;
                     this.httpGet();
                 },
                 httpGet: function () {
@@ -104,36 +104,52 @@ chrome.storage.sync.get("poikey", function (obj) {
                         //proceed with location
                         if (Startercopy.excludeFound === false) {
                             Startercopy.currentLocation = location;
-                            Startercopy.addArray();
+
+                            Startercopy.GetNumberNeeded();
                         }
     
                     });
                 },
+                GetNumberNeeded: function () {
+                    console.log('GetNumberNeeded');
+                    console.log(Startercopy.currentLocation);
+                    console.log(Startercopy.currentLiquidIndex);
+                    console.log(this.numberNeeded);
+                    console.log(this.currentNumber);
+                    console.log('GetNumberNeeded End');
+                    if(this.numberNeeded <=  this.currentNumber){
+                   // Startercopy.addArray();
+                    this.currentNumber ++
+                     }
+                },
                 addArray: function () {
                     Startercopy[Startercopy.currentLiquidIndex].push(Startercopy.currentLocation.name);
-                    console.log(Startercopy.location_landmark_2_name);
-    
-                    this.placeLocation();
+                    //console.log('SearchTerms_var');
+                   // console.log(this[Startercopy.currentLiquidIndex].length);
+                   // console.log('liquidIndex_var');
+                   // console.log(this.SearchTerms[Startercopy.currentLiquidIndex].searchInfo.length);
+                    //this.placeLocation();
                 },
                 placeLocation: function () {
-                    console.log('Startercopy.currentLiquidIndex');
-                    console.log(Startercopy.currentLiquidIndex);
+                    //console.log(this[Startercopy.currentLiquidIndex].length());
+                    
                     if(this.currentLiquidIndex === "location_landmark_2_name"){
                         this.createSelect();
                     }
                     else{
                         this.createList();
                     }
+                    
                 },
                 createSelect: function (){
-                    console.log('we here');
-                    $.each(this.currentLiquidIndex, function (i, name) {
+                    //console.log(this[Startercopy.currentLiquidIndex]);
+                    $.each(this[Startercopy.currentLiquidIndex], function (i, name) {
                         console.log('name');
                         console.log(name);
                     });
                 },
                 createList: function (){
-                    $.each(this.currentLiquidIndex, function (i, name) {
+                    $.each(this.currentLiquid, function (i, name) {
                         console.log('name');
                         console.log(name);
                     });
