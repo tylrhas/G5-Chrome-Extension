@@ -70,6 +70,8 @@ chrome.storage.sync.get("poikey", function (obj) {
                 Startercopy.currentLiquid = liquidVariable;
                 Startercopy.currentLiquidIndex = i;
                 $.each(liquidVariable.searchInfo, function (i2, searchInfoEach) {
+                    console.log('setting to 1');
+                    Startercopy.currentNumber = 1;
                     Startercopy.searchTerm = searchInfoEach.searchTerm;
                     Startercopy.numberNeeded = searchInfoEach.numberNeeded;
                     Startercopy.buildURL();
@@ -80,8 +82,6 @@ chrome.storage.sync.get("poikey", function (obj) {
             this.url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + this.locationLatitude + "," + this.locationLongitude +
                 "&radius=" + this.search_radius_meters_whole + "&type=" + this.searchTerm + "&rankby=prominence&key=" + this.chromePlacesApiKey;
             console.log(this.url);
-            //Set current number to 1
-            Startercopy.currentNumber = 1;
             this.httpGet();
         },
         httpGet: function () {
