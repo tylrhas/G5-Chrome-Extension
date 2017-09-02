@@ -113,6 +113,7 @@ chrome.storage.sync.get("poikey", function (obj) {
         currentLocation: null,
         currentNumber: null,
         currentSearchTerm: null,
+        NumberTermsNeeded: null,
         currentLiquid: null,
         currentLiquidIndex: null,
         placeTypeExcludes: new Array(
@@ -164,6 +165,8 @@ chrome.storage.sync.get("poikey", function (obj) {
             $.each(this.SearchTerms, function (i, liquidVariable) {
                 Startercopy.currentLiquid = liquidVariable;
                 Startercopy.currentLiquidIndex = i;
+                //Get and set total number of terms for Liquid variable input
+                Startercopy.getNumberOfTerms();
                 $.each(liquidVariable.searchInfo, function (i2, searchInfoEach) {
                     Startercopy.searchTerm = searchInfoEach.searchTerm;
                     Startercopy.numberNeeded = searchInfoEach.numberNeeded;
@@ -225,25 +228,26 @@ chrome.storage.sync.get("poikey", function (obj) {
             console.log(Startercopy.numberNeeded);
             console.log(Startercopy.currentLocation);
             console.log(Startercopy.currentLiquidIndex);
+            //get correct number for each search term
             if (Startercopy.currentNumber <= Startercopy.numberNeeded) {
                 console.log('we here');
-                // Startercopy.addArray();
+                Startercopy.addArray();
                 this.currentNumber++
             }
             console.log('GetNumberNeeded End');
-            console.log('END DEBUG');
         },
         addArray: function () {
             Startercopy[Startercopy.currentLiquidIndex].push(Startercopy.currentLocation.name);
-            //console.log('SearchTerms_var');
-            // console.log(this[Startercopy.currentLiquidIndex].length);
-            // console.log('liquidIndex_var');
             // console.log(this.SearchTerms[Startercopy.currentLiquidIndex].searchInfo.length);
             //this.placeLocation();
+            //check if the list is fully populated
+            if(Startercopy.NumberTermsNeeded == Startercopy[Startercopy.currentLiquidIndex].length ){
+                console.log('placing location');
+                console.log('END DEBUG');
+            this.placeLocation();
+        }
         },
         placeLocation: function () {
-            //console.log(this[Startercopy.currentLiquidIndex].length());
-
             if (this.currentLiquidIndex === "location_landmark_2_name") {
                 this.createSelect();
             }
@@ -251,6 +255,15 @@ chrome.storage.sync.get("poikey", function (obj) {
                 this.createList();
             }
 
+        },
+        getNumberOfTerms: function () {
+            $.each(this.SearchTerms[Startercopy.currentLiquidIndex].searchInfo, function (i, searchterm) {
+                Startercopy.NumberTermsNeeded = Startercopy.NumberTermsNeeded + searchterm.numberNeeded;
+                console.log('calculating');
+                console.log(Startercopy.NumberTermsNeeded);
+            });
+            console.log('Startercopy.NumberTermsNeeded');
+            console.log(Startercopy.NumberTermsNeeded);
         },
         createSelect: function () {
             //console.log(this[Startercopy.currentLiquidIndex]);
