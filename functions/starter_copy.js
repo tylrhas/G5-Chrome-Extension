@@ -1,113 +1,13 @@
 chrome.storage.sync.get("poikey", function (obj) {
 
     var Startercopy = {
-        testData: {
-            "html_attributions": [],
-            "results": [
-                {
-                    "geometry": {
-                        "location": {
-                            "lat": 39.176676,
-                            "lng": -75.5268966
-                        },
-                        "viewport": {
-                            "northeast": {
-                                "lat": 39.1780249802915,
-                                "lng": -75.52554761970849
-                            },
-                            "southwest": {
-                                "lat": 39.1753270197085,
-                                "lng": -75.52824558029151
-                            }
-                        }
-                    },
-                    "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/generic_recreational-71.png",
-                    "id": "bb166663840127bbd8b34f48a92d42b11beb3821",
-                    "name": "The Overlook on Silver Lake",
-                    "photos": [
-                        {
-                            "height": 5312,
-                            "html_attributions": [
-                                "\u003ca href=\"https://maps.google.com/maps/contrib/115576562319988659796/photos\"\u003eJeremy Pentoney\u003c/a\u003e"
-                            ],
-                            "photo_reference": "CmRaAAAA12wTaXezXxSfCBVh6aQfrtIY6A3F6PfpUBUsGRbT0vCsHrDxgaXDnTZd4j6S6RB0batxsvLjZGJiosRUnOwulvscH4UxcUvN8eE_LL6ekvFtY1YCOWS1H0lRMsKy0IjIEhB4zBMRNAGmExtaqieWBJF0GhR_QmAI9aE4gGPQhhwkHqaBqo-8RQ",
-                            "width": 2988
-                        }
-                    ],
-                    "place_id": "ChIJ0eXsrMpkx4kRrLOEp0GIXHc",
-                    "rating": 3,
-                    "reference": "CmRRAAAAVry3C0DpZYg2RVPlOzdIzMLQHHIEkbvUvdtTGGysvUnLYSuN6jb5D987FgYahbeILVbedEePx9-9Si2l3gjE6cY8hbc-2g5pZp9dWO8hrtE7W5HWtJ2uaSZpLhuMq_X3EhAKpIC-S8gwZq3spF0zgRxIGhRbaR0xPKILw0QQ5V0kbFL-LP60HQ",
-                    "scope": "GOOGLE",
-                    "types": ["park", "point_of_interest", "establishment"],
-                    "vicinity": "Dover"
-                },
-                {
-                    "geometry": {
-                        "location": {
-                            "lat": 39.17289769999999,
-                            "lng": -75.532583
-                        },
-                        "viewport": {
-                            "northeast": {
-                                "lat": 39.1744271302915,
-                                "lng": -75.53015239999999
-                            },
-                            "southwest": {
-                                "lat": 39.1717291697085,
-                                "lng": -75.5340042
-                            }
-                        }
-                    },
-                    "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/geocode-71.png",
-                    "id": "fc42bb622bd98b57c4bf7ac72d07a8443a64f5ed",
-                    "name": "Richardson Park",
-                    "place_id": "ChIJ15VywEt7x4kRuZoKiSSxMgI",
-                    "reference": "CmRbAAAAIKMi0ShdSomVUwuUCa2NhshuZKf1KGD4sArsrScxfH1bghGpd1zGESmiAkoFLc1Hg6-2L4fu7n68KIw4VFvcBJnPStKJcJjp48bkLtU28hiHfANBnCMTRDoSd5XJpV3aEhA4jAe_lSqW3yr8zKWCGaWJGhThSAnofFZcScgUI-pYpdHfsGcyGA",
-                    "scope": "GOOGLE",
-                    "types": ["park", "premise", "point_of_interest", "establishment"],
-                    "vicinity": "Dover"
-                },
-                {
-                    "geometry": {
-                        "location": {
-                            "lat": 39.1644178,
-                            "lng": -75.55368919999999
-                        },
-                        "viewport": {
-                            "northeast": {
-                                "lat": 39.1656697302915,
-                                "lng": -75.55239601970848
-                            },
-                            "southwest": {
-                                "lat": 39.1629717697085,
-                                "lng": -75.5550939802915
-                            }
-                        }
-                    },
-                    "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/geocode-71.png",
-                    "id": "6c3df9cfb2a73c4a5d707e5bed8263fa5588bbde",
-                    "name": "Continental Park",
-                    "place_id": "ChIJFYvEKmd7x4kRRIPf5qmy2Pk",
-                    "reference": "CmRbAAAAbXzltM8Ua9ZhNMgOsAiWxt81PtzZzcv3bHN3Yn0nLQUYK8Dd8QyrOrs9s_ap_5y5gwUbDdALcOxWwpnUFPPVPJTvb1BkDah-7s9QzbBwuuDHlg8avYBWsQ8Y96WercRXEhD9EHyT_okTZVJcGWtzwUHnGhQPeXq7DhHD7ROMupqTl1nlWaNH8w",
-                    "scope": "GOOGLE",
-                    "types": ["park", "premise", "point_of_interest", "establishment"],
-                    "vicinity": "Dover"
-                }
-            ],
-            "status": "OK"
-        },
         url: null,
-        searchData: null,
         search_radius_meters_whole: null,
         pageWrapper: null,
-        location_landmark_2_name: new Array(),
-        locationNearbyEmployers: {},
-        locationNearbySchools: {},
         locationLatitude: null,
         locationLongitude: null,
         chromePlacesApiKey: obj.poikey,
         numberNeeded: null,
-        searchTerm: null,
         placedLocations: null,
         excludeFound: false,
         currentLocation: null,
@@ -116,6 +16,9 @@ chrome.storage.sync.get("poikey", function (obj) {
         NumberTermsNeeded: null,
         currentLiquid: null,
         currentLiquidIndex: null,
+        currentSearchIndex:null,
+        currentSearchInfo:null,
+        currentLiquidInfo:null,
         placeTypeExcludes: new Array(
             "lodging"
         ),
@@ -124,19 +27,27 @@ chrome.storage.sync.get("poikey", function (obj) {
                 searchInfo: [
                     {
                         numberNeeded: 2,
-                        searchTerm: "natural_feature"
+                        searchTerm: "natural_feature",
+                        url:null,
+                        searchData:null
                     },
                     {
                         numberNeeded: 1,
-                        searchTerm: "park"
+                        searchTerm: "park",
+                        url:null,
+                        searchData:null
                     },
                     {
                         numberNeeded: 1,
-                        searchTerm: "stadium"
+                        searchTerm: "stadium",
+                        url:null,
+                        searchData:null
                     },
                     {
                         numberNeeded: 1,
-                        searchTerm: "library"
+                        searchTerm: "library",
+                        url:null,
+                        searchData:null
                     }
                 ]
             }
@@ -163,45 +74,64 @@ chrome.storage.sync.get("poikey", function (obj) {
         },
         getTerm: function () {
             $.each(this.SearchTerms, function (i, liquidVariable) {
-                Startercopy.currentLiquid = liquidVariable;
                 Startercopy.currentLiquidIndex = i;
                 //Get and set total number of terms for Liquid variable input
                 Startercopy.getNumberOfTerms();
                 $.each(liquidVariable.searchInfo, function (i2, searchInfoEach) {
-                    Startercopy.searchTerm = searchInfoEach.searchTerm;
-                    Startercopy.numberNeeded = searchInfoEach.numberNeeded;
-                    console.log('BEGIN DEBUG');
-                    console.log('debugging search term');
-                    console.log(searchInfoEach.searchTerm);
-                    console.log(searchInfoEach.numberNeeded);
-                    console.log('end search term');
+                    Startercopy.currentSearchIndex = i2;
+                    Startercopy.currentSearchTerm = searchInfoEach.searchTerm;
                     Startercopy.buildURL();
                     //set vals back to null
                 });
             });
+            this.popSearchTerms();
         },
         buildURL: function () {
-            console.log('buildURL');
             this.url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + this.locationLatitude + "," + this.locationLongitude +
-                "&radius=" + this.search_radius_meters_whole + "&type=" + this.searchTerm + "&rankby=prominence&key=" + this.chromePlacesApiKey;
-            console.log(this.url);
-            Startercopy.testGet();
+                "&radius=" + this.search_radius_meters_whole + "&type=" + this.currentSearchTerm + "&rankby=prominence&key=" + this.chromePlacesApiKey;
+            this.buildSearchObject();
         },
-        testGet: function () {
-            console.log('testGet');
-            Startercopy.searchData = Startercopy.testData;
-            if (Startercopy.searchData.status === "OK") {
-                Startercopy.checkExcludes();
+        buildSearchObject: function() {
+            this.SearchTerms[this.currentLiquidIndex].searchInfo[this.currentSearchIndex].url= this.url;
+            console.log(this.SearchTerms);
+        },
+        popSearchTerms: function() {
+            for (var key in Startercopy.SearchTerms) {
+                // set current liquid value
+                Startercopy.currentLiquid = key;
+                console.log(Startercopy.currentLiquid);
+                Startercopy.currentLiquidInfo = Startercopy.SearchTerms[key];
+                console.log(Startercopy.currentLiquidInfo);
+              // If the property can't be deleted fail with an error.
+              if (!delete Startercopy.SearchTerms[key]) { throw new Error(); }
+              //proceed to get the search info
+              Startercopy.popSearchInfo();
             }
         },
-        httpGet: function () {
-            $.getJSON(this.url, function (data, status) {
-                Startercopy.searchData = data;
+        popSearchInfo: function () {
+            for (var key in Startercopy.currentLiquidInfo.searchInfo) {
+                // set current liquid index
+              console.log(key);
+              Startercopy.currentSearchInfo = Startercopy.currentLiquidInfo.searchInfo[key];
+              console.log(Startercopy.currentSearchInfo );
+              // If the property can't be deleted fail with an error.
+              if (!delete Startercopy.currentSearchInfo[key]) { throw new Error(); }
+              console.log(Startercopy.currentSearchInfo);
+              Startercopy.httpGet();
+            }
+        },
+        httpGet: function() {
+            $.getJSON(this.currentSearchInfo.url, function (data, status) {
+                Startercopy.currentSearchInfo.searchData = data;
+                //console.log(data);
+                //console.log(Startercopy.currentSearchInfo.searchData);
                 if (data.status === "OK") {
-                    Startercopy.checkExcludes();
+                    console.log('moving on');
+                    console.log(Startercopy.currentSearchInfo);
+                    //Startercopy.checkExcludes();
                 }
             });
-        },
+            },
         checkExcludes: function () {
             console.log('checkExcludes');
             console.log('setting to 1');
@@ -281,4 +211,3 @@ chrome.storage.sync.get("poikey", function (obj) {
     }
     Startercopy.init();
 });
-
