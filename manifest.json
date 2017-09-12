@@ -2,8 +2,8 @@
   "manifest_version": 2,
 
   "name": "G5 Bookmarklets",
-  "description": "Future home of Bookmarklets for the G5 WCS Team",
-  "version": "1.2.6",
+  "description": "Home of Bookmarklets for the G5 WCS Team",
+  "version": "1.2.7",
 
   "icons": {
     "48": "icon.png"
