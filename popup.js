@@ -84,6 +84,9 @@ function createNewTab(obj) {
       }
     return str.join("&");
   }
+  function hubSearch(){
+    chrome.tabs.executeScript({ file: "functions/hub-Search.js" });
+  }
 
 //event listeners
 document.getElementById('hubpoi').addEventListener('click', hub_poi);
@@ -94,6 +97,7 @@ document.getElementById('structured_data').addEventListener('click', structured_
 document.getElementById('sidekiq').addEventListener('click', sidekiq);
 document.getElementById('copy').addEventListener('click', copy);
 document.getElementById('alt').addEventListener('click', alt);
+document.getElementById('search').addEventListener('click', hubSearch);
 
 
 
