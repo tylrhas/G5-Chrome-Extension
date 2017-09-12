@@ -61,7 +61,7 @@ document.getElementById('wysiwyg').addEventListener('click', wysiwyg);
 document.getElementById('seo').addEventListener('click', seo);
 document.getElementById('structured_data').addEventListener('click', structured_data);
 document.getElementById('sidekiq').addEventListener('click', sidekiq);
-document.getElementById('copy').addEventListener('click', copy);
+//document.getElementById('copy').addEventListener('click', copy);
 document.getElementById('alt').addEventListener('click', alt);
 
 
