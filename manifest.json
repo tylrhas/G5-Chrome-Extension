@@ -3,7 +3,7 @@
 
   "name": "G5 Bookmarklets",
   "description": "Home of Bookmarklets for the G5 WCS Team",
-  "version": "1.2.7",
+  "version": "1.4",
 
   "icons": {
     "48": "icon.png"
@@ -29,6 +29,37 @@
   },
 
   "web_accessible_resources": [
-    "scripts/wysiwyg-script.js"
-  ]
+    "scripts/wysiwyg-script.js",
+    "functions/open_hub.js"
+  ],
+  "commands": {
+    "wysiwyg": {
+      "suggested_key": {
+        "default": "Ctrl+Y",
+        "mac": "Command+Y"
+      },
+      "description": "Execute WYSIWYG function"
+    },
+    "search": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+U",
+        "mac": "Command+Shift+U"
+      },
+      "description": "Execute Hub Search function"
+    },
+    "HubPOI": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+H",
+        "mac": "Command+Shift+H"
+      },
+      "description": "Execute Hub Points of Interest function"
+    },
+    "sidekiq": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+Q",
+        "mac": "Command+Shift+Q"
+      },
+      "description": "Open Sidekiq to Live Poll"
+    }
+  }
 }

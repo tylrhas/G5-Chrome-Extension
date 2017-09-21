@@ -3,22 +3,22 @@ body{
     height: 410px;
     text-transform: uppercase;
 }
-.nav-stacked>li.active , .nav-stacked>li:hover{
+.nav-stacked>li a.active , .nav-stacked>li:hover{
     background-color: #0477bd !important;
     color:#fff;
 }
-.nav-stacked>li.active a, .nav-stacked>li a:hover{
+.nav-stacked>li a.active, .nav-stacked>li a:hover{
     color:#fff;
     background-color: #0477bd !important;
 }
 
-.nav-stacked>li.active ,.nav-stacked>li:hover{
+.nav-stacked>li a.active ,.nav-stacked>li:hover{
     background-color:#0477bd !important;
     color:#fff;
     position:relative;
     text-align:center;
 }
-.nav-stacked>li.active:after , .nav-stacked>li:hover:after{
+.nav-stacked>li a.active:after , .nav-stacked>li:hover:after{
     content:"";
     position:absolute;
     height:0;
