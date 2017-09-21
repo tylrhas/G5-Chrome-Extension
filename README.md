@@ -1,2 +1,2 @@
 # Hub-POI
-More functions to be added to this in the coming weeks
+Home of all bookmarklets for the WIS Team at G5
