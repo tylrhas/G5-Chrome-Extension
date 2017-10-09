@@ -167,7 +167,7 @@ var AutoSEO = {
   }
   var SEOPage = function(page, title, description) {
     this.page = page.trim().toLowerCase();
-    this.title = title.trim().toLowerCase();
-    this.description = description.trim().toLowerCase();
+    this.title = title.trim();
+    this.description = description.trim();
   };
   AutoSEO.init();
