@@ -18,6 +18,13 @@ function wysiwyg() {
     });
   });
 }
+function openHub() {
+  chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+    chrome.tabs.sendMessage(tabs[0].id, { action: "open_hub" }, function (response) {
+      console.log(response);
+    });
+  });
+}
 
 function seo() {
   chrome.tabs.executeScript({ file: "scripts/jquery-3.2.1.min.js" }, function () {
@@ -42,7 +49,7 @@ function sidekiq() {
     var currentURL = tabs[0].url;
     // https://stackoverflow.com/questions/3689423/google-chrome-plugin-how-to-get-domain-from-url-tab-url
     var domain = currentURL.match(/^[\w-]+:\/{2,}\[?[\w\.:-]+\]?(?::[0-9]*)?/)[0];
-    var url = domain + '/sidekiq';
+    var url = domain + '/sidekiq/busy?poll=true';
     chrome.tabs.create({ url: url });
   });
 }
@@ -65,25 +72,29 @@ function createQueryStringObj(header, locationData) {
   for (var i = 0; i < locationData.length; i++) {
     obj[header[i]] = locationData[i];
   }
-  console.log(obj);
   createNewTab(obj);
 }
 function createNewTab(obj) {
-  console.log(obj);
-  urn = obj.urn;
-  if (!delete obj.urn) { throw new Error(); }
+  //if (!delete obj.urn) { throw new Error(); }
+   chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+    var currentURL = tabs[0].url;
+    var createNewTab = currentURL+"/"+obj.urn+"/edit?"+createQueryString(obj);
+    console.log(createNewTab);
+    chrome.tabs.create({ url: createNewTab, active:false});
+  });
 
-  console.log(urn);
-  console.log(obj);
 }
   function createQueryString(obj) {
     var str = [];
     for (var p in obj)
       if (obj.hasOwnProperty(p)) {
+        if(p != "urn"){
         str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+      }
       }
     return str.join("&");
   }
+
   function hubSearch(){
     chrome.tabs.executeScript({ file: "functions/hub-Search.js" });
   }
@@ -98,7 +109,7 @@ document.getElementById('sidekiq').addEventListener('click', sidekiq);
 //document.getElementById('copy').addEventListener('click', copy);
 document.getElementById('alt').addEventListener('click', alt);
 document.getElementById('search').addEventListener('click', hubSearch);
-
+document.getElementById('open_hub').addEventListener('click', openHub);
 
 
 //set the input value
@@ -127,7 +138,6 @@ $(function () {
 
   });
 });
-
 
 // Used for CSV upload for the hub bulk update
 $(document).ready(function () {
