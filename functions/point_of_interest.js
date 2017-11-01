@@ -27,22 +27,21 @@ get_locations("amusement_park", locationLatitude, locationLongitude, search_radi
 get_locations("stadium", locationLatitude, locationLongitude, search_radius_meters_whole, apiKey, 3, null, 1, "activities", placed_locations);
 get_locations("zoo", locationLatitude, locationLongitude, search_radius_meters_whole, apiKey, 4, null, 1, "activities", placed_locations);
 //get entertainment locations
-get_locations("movie_theater", locationLatitude, locationLongitude, search_radius_meters_whole, apiKey, 5, null, 2, "entertainment", placed_locations);
-get_locations("art_gallery", locationLatitude, locationLongitude, search_radius_meters_whole, apiKey, 7, null, 1, "entertainment", placed_locations);
-get_locations("museum", locationLatitude, locationLongitude, search_radius_meters_whole, apiKey, 8, null, 1, "entertainment", placed_locations);
-get_locations("natural_feature", locationLatitude, locationLongitude, search_radius_meters_whole, apiKey, 9, null, 1, "entertainment", placed_locations);
+get_locations("movie_theater", locationLatitude, locationLongitude, search_radius_meters_whole, apiKey, 10, null, 2, "entertainment", placed_locations);
+get_locations("art_gallery", locationLatitude, locationLongitude, search_radius_meters_whole, apiKey, 12, null, 1, "entertainment", placed_locations);
+get_locations("museum", locationLatitude, locationLongitude, search_radius_meters_whole, apiKey, 13, null, 1, "entertainment", placed_locations);
+get_locations("natural_feature", locationLatitude, locationLongitude, search_radius_meters_whole, apiKey, 14, null, 1, "entertainment", placed_locations);
 
 //get Food & Drink locations
-get_locations("restaurant", locationLatitude, locationLongitude, search_radius_meters_whole, apiKey, 10, "lodging", 3, "food", placed_locations);
-get_locations("cafe", locationLatitude, locationLongitude, search_radius_meters_whole, apiKey, 13, "lodging", 1, "food", placed_locations);
-get_locations("convenience_store", locationLatitude, locationLongitude, search_radius_meters_whole, apiKey, 14, "lodging", 1, "food", placed_locations);
+get_locations("restaurant", locationLatitude, locationLongitude, search_radius_meters_whole, apiKey, 20, "lodging", 3, "food", placed_locations);
+get_locations("cafe", locationLatitude, locationLongitude, search_radius_meters_whole, apiKey, 23, "lodging", 2, "food", placed_locations);
 //get School locations
-get_locations("school", locationLatitude, locationLongitude, search_radius_meters_whole, apiKey, 15, null, 4, "school", placed_locations);
-get_locations("library", locationLatitude, locationLongitude, search_radius_meters_whole, apiKey, 19, null, 1, "school", placed_locations);
+get_locations("school", locationLatitude, locationLongitude, search_radius_meters_whole, apiKey, 30, null, 4, "school", placed_locations);
+get_locations("library", locationLatitude, locationLongitude, search_radius_meters_whole, apiKey, 34, null, 1, "school", placed_locations);
 //get Shopping locations
-get_locations("store", locationLatitude, locationLongitude, search_radius_meters_whole, apiKey, 20, null, 2, "shopping", placed_locations);
-get_locations("department_store", locationLatitude, locationLongitude, search_radius_meters_whole, apiKey, 22, null, 2, "shopping", placed_locations);
-get_locations("shopping_mall", locationLatitude, locationLongitude, search_radius_meters_whole, apiKey, 24, null, 1, "shopping", placed_locations);
+get_locations("store", locationLatitude, locationLongitude, search_radius_meters_whole, apiKey, 40, null, 2, "shopping", placed_locations);
+get_locations("department_store", locationLatitude, locationLongitude, search_radius_meters_whole, apiKey, 42, null, 2, "shopping", placed_locations);
+get_locations("shopping_mall", locationLatitude, locationLongitude, search_radius_meters_whole, apiKey, 44, null, 1, "shopping", placed_locations);
 
 function get_locations(type, locationLatitude, locationLongitude, search_radius_meters_whole, apiKey, inputStartNumber, typeExclude, numberOfLocations, category, placed_locations) {
     //category for future tooling - ie fill in extra blanks
