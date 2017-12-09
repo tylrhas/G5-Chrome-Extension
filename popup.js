@@ -25,7 +25,13 @@ function openHub() {
     });
   });
 }
-
+function autoalt(){
+  chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+    chrome.tabs.sendMessage(tabs[0].id, { action: "autoalt" }, function (response) {
+      console.log(response);
+    });
+  });
+}
 function seo() {
   chrome.tabs.executeScript({ file: "scripts/jquery-3.2.1.min.js" }, function () {
     chrome.tabs.executeScript({ file: "functions/seo_updater.js" });
@@ -110,6 +116,8 @@ document.getElementById('sidekiq').addEventListener('click', sidekiq);
 document.getElementById('alt').addEventListener('click', alt);
 document.getElementById('search').addEventListener('click', hubSearch);
 document.getElementById('open_hub').addEventListener('click', openHub);
+document.getElementById('autoalt').addEventListener('click', autoalt);
+
 
 
 //set the input value
