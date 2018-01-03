@@ -66,6 +66,12 @@ function copy() {
     });
   });
 }
+
+function transfer() {
+  chrome.tabs.executeScript({ file: "scripts/jquery-3.2.1.min.js" }, function () {
+    chrome.tabs.executeScript({ file: "functions/transfer.js" });
+  });
+}
 function hubUpdater(csvData) {
   //remove the header from the array
   header = csvData.shift();
@@ -115,15 +121,17 @@ document.getElementById('sidekiq').addEventListener('click', sidekiq);
 //document.getElementById('copy').addEventListener('click', copy);
 document.getElementById('alt').addEventListener('click', alt);
 document.getElementById('search').addEventListener('click', hubSearch);
-document.getElementById('open_hub').addEventListener('click', openHub);
+//document.getElementById('open_hub').addEventListener('click', openHub);
 document.getElementById('autoalt').addEventListener('click', autoalt);
+document.getElementById('transfer').addEventListener('click', transfer);
 
 
 
 //set the input value
-chrome.storage.sync.get('poikey', function (obj) {
+chrome.storage.sync.get(['poikey', 'transferURL'], function (obj) {
   console.log(obj);
   $('#poikey').val(obj.poikey);
+  $('#transferURL').val(obj.transferURL);
 });
 
 
@@ -132,14 +140,19 @@ $(function () {
   $('#save').click(function () {
     // Get a value saved in a form.
     var theValue = $('#poikey').val();
+    var transferURL = $('#transferURL').val();
     console.log(theValue);
     // Check that there's some code there.
     if (!theValue) {
       console.log('Error: No value specified');
       return;
     }
+    if (!transferURL) {
+      console.log('Error: No value specified');
+      return;
+    } 
     // Save it using the Chrome extension storage API.
-    chrome.storage.sync.set({ 'poikey': theValue }, function () {
+    chrome.storage.sync.set({ 'poikey': theValue , 'transferURL' : transferURL}, function () {
       // Notify that we saved.
       console.log('Settings saved');
     });
