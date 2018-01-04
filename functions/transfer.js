@@ -3,7 +3,7 @@ chrome.storage.sync.get('transferURL', function (obj) {
     getAssets();
     function getAssets() {
         var Urls = document.getElementsByClassName('asset-url');
-        alert(Urls.length);
+        // alert(Urls.length);
         assetLocations = [];
         for (i = 0; i < Urls.length; i++) {
             assetLocations.push(Urls[i]['innerText'].split("\n")[0])
@@ -12,20 +12,32 @@ chrome.storage.sync.get('transferURL', function (obj) {
     }
 
     function downloadAssets(assetLocations) {
-        const xhr = new XMLHttpRequest();
-        const url = assetdownloadLocation;
-        const data = JSON.stringify(assetLocations);
-        console.log(data);
-        xhr.responseType = 'json';
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === XMLHttpRequest.DONE) {
-               console.log(xhr.response);
-              html ='<a class="green btn" href="'+xhr.response.url+'"download>Download Assets</a>';
-                uploadButton = document.getElementsByClassName('upload-files')[0];
-                uploadButton.insertAdjacentHTML('afterend', html);
+
+        var xhr = new XMLHttpRequest(),
+            url = assetdownloadLocation,
+            data = JSON.stringify(assetLocations)
+
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+        xhr.onload = function () {
+            var data = JSON.parse(xhr.responseText);
+            if (xhr.status == "200") {
+                console.log(data.url);
+                uploadButton = document.getElementsByClassName('asset-uploader-wrapper')[0];
+                downloadButton = document.createElement('a');
+                downloadButtonWrapper = document.createElement('div');
+                downloadButtonWrapper.className = 'file-field input-field';
+                //downloadButton.setAttribute('href', xhr.response.url)
+                downloadButton.setAttribute('download', data.url);
+                downloadButton.setAttribute('href', data.url);
+                downloadButton.innerText = 'Download Assets';
+                downloadButton.className = 'green btn';
+                downloadButtonWrapper.appendChild(downloadButton)
+                uploadButton.appendChild(downloadButtonWrapper)
+            } else {
+                console.error(xhr.response);
             }
         }
-        xhr.open('POST', url);
         xhr.send(data);
     }
 });
