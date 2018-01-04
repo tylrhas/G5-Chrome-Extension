@@ -35,7 +35,7 @@ chrome.storage.sync.get('transferURL', function (obj) {
                 downloadButtonWrapper.appendChild(downloadButton)
                 uploadButton.appendChild(downloadButtonWrapper)
             } else {
-                console.error(xhr.response);
+                alert('An Error occured');
             }
         }
         xhr.send(data);
