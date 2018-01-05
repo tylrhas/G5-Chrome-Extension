@@ -59,23 +59,23 @@ function placeData(id, val) {
     document.getElementById(id).value = val;
 }
 
-// var scr = document.createElement("script");
-// scr.type = "text/javascript";
-// scr.src = chrome.extension.getURL('/scripts/wysiwyg-script.js');
-// (document.head || document.body || document.documentElement).appendChild(scr);
-//$('#submit-location-form').trigger('click');
+var scr = document.createElement("script");
+scr.type = "text/javascript";
+scr.src = chrome.extension.getURL('/scripts/wysiwyg-script.js');
+(document.head || document.body || document.documentElement).appendChild(scr);
+$('#submit-location-form').trigger('click');
 
-// (function deferpreview() {
-//     if (document.getElementById('preview') != null) {
-//         var preview = document.getElementById('preview');
-//         var iframe = preview.getElementsByTagName('iframe');
-//         checkIframeLoad(iframe);
-//     }
-//     else {
-//         setTimeout(function () { deferpreview() }, 50);
-//     }
-// })();
-checkModal();
+(function deferpreview() {
+    if (document.getElementById('preview') != null) {
+        var preview = document.getElementById('preview');
+        var iframe = preview.getElementsByTagName('iframe');
+        checkIframeLoad(iframe);
+    }
+    else {
+        setTimeout(function () { deferpreview() }, 50);
+    }
+})();
+wysiwygOnSrc();
 function checkModal() {
     console.log('checking modal');
     if (document.getElementsByClassName('modal show')[0] == null) {
@@ -97,7 +97,9 @@ function wysiwygOnSrc() {
         ckeEditors = document.getElementsByClassName('cke');
 
         for (var i = 0; i < ckeEditors.length; i++) {
-            addButton(ckeEditors[i]);
+            if(!document.getElementById('cke_wysiwyg')){
+            addButton(ckeEditors[i], i);
+        }
         }
 
         document.getElementById('cke_wysiwyg').addEventListener("click", function (e) {
@@ -113,6 +115,11 @@ function wysiwygOnSrc() {
         }
 
         onetime(document.getElementsByClassName("goback-button")[0], 'click' ,goingBack);
+        onetime(document.getElementsByClassName("save-progress")[0], 'click' ,save_progress);
+        onetime(document.getElementsByClassName("save-button")[0], 'click' ,modalClosing);
+        onetime(document.getElementsByClassName("cancel-button")[0], 'click' ,modalClosing);
+        onetime(document.getElementsByClassName("close-button")[0], 'click' ,modalClosing);
+        
     }
 }
 function injectJs(link) {
@@ -121,19 +128,24 @@ function injectJs(link) {
     scr.src = link;
     (document.head || document.body || document.documentElement).appendChild(scr);
 }
-function addButton(editor) {
+function addButton(editor, i) {
     var b = '<span class="cke_toolgroup" role="presentation"><a class="cke_button cke_button__source"><span  class="cke_button_label cke_button__source_label" id="cke_wysiwyg">WYSIWYG</span></a></span>';
     var wrapper = editor.getElementsByClassName("cke_top")[0];
     wrapper.innerHTML += b;
 }
 function modalClosing(e) {
     console.log('closing');
-    return checkModal();
+    checkModal();
 }
 
 function goingBack(e) {
     console.log('going back');
     checkModal();
+}
+
+function save_progress(e){
+    console.log('saving progress');
+    wysiwygOnSrc()
 }
 
 // create a one-time event

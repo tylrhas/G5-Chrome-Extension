@@ -72,6 +72,18 @@ function transfer() {
     chrome.tabs.executeScript({ file: "functions/transfer.js" });
   });
 }
+
+function changelogs(){
+  chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+    var currentURL = tabs[0].url;
+    splitURL = currentURL.split('/');
+    changelogsURL = 'https://'+splitURL[2]+'/api/websites/'+splitURL[4]+'/changelogs';
+    console.log(changelogsURL);
+    chrome.tabs.create({ url: changelogsURL });
+  });
+}
+
+//Begin Hubupdater functions
 function hubUpdater(csvData) {
   //remove the header from the array
   header = csvData.shift();
@@ -106,7 +118,7 @@ function createNewTab(obj) {
       }
     return str.join("&");
   }
-
+//end hub updater functions
   function hubSearch(){
     chrome.tabs.executeScript({ file: "functions/hub-Search.js" });
   }
@@ -119,12 +131,12 @@ document.getElementById('seo').addEventListener('click', seo);
 document.getElementById('structured_data').addEventListener('click', structured_data);
 document.getElementById('sidekiq').addEventListener('click', sidekiq);
 //document.getElementById('copy').addEventListener('click', copy);
-document.getElementById('alt').addEventListener('click', alt);
-document.getElementById('search').addEventListener('click', hubSearch);
 //document.getElementById('open_hub').addEventListener('click', openHub);
-document.getElementById('autoalt').addEventListener('click', autoalt);
+//document.getElementById('autoalt').addEventListener('click', autoalt);
+//document.getElementById('alt').addEventListener('click', alt);
+document.getElementById('search').addEventListener('click', hubSearch);
 document.getElementById('transfer').addEventListener('click', transfer);
-
+document.getElementById('changelogs').addEventListener('click', changelogs);
 
 
 //set the input value
