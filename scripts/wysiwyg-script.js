@@ -1,34 +1,3 @@
-$(document).ready(function () {
-    checkCKEDITOR();
-});
-
-function checkCKEDITOR() {
-    if (typeof CKEDITOR == 'undefined') {
-        console.log('not defined');
-        setTimeout(checkCKEDITOR.bind(null, null), 1000);
-    }
-    else {
-        console.log('defined');
-        console.log(CKEDITOR);
-
-        $("#g5-c2e-edit").click(function () {
-            alert("Hello!");
-        });
-    }
-
-    //insert the button for html editor and then bind to the click of the button
-    // var b = '<span class="cke_toolgroup" role="presentation"><a class="cke_button cke_button__source"><span  class="cke_button_label cke_button__source_label" id="cke_wysiwyg">WYSIWYG</span></a></span>';
-    // var wrapper = document.getElementById("cke_1_top");
-    // wrapper.innerHTML+=b;
-
-    // document.getElementById('cke_wysiwyg').addEventListener("click", function (e) {
-    //     console.log('clicked');
-    //     console.log('do something');   
-    //     injectJs(chrome.extension.getURL('/scripts/wysiwyg-script.js'));
-
-    // });
-}
-function cleanHTML() {
     // v2
     // Object.keys(CKEDITOR.instances).forEach(function(e,i){console.log(e,i,CKEDITOR.instances[e]);})
     /* global CKEDITOR, $ */
@@ -63,4 +32,3 @@ function cleanHTML() {
         inst.setData(data.html());
 
     });
-}

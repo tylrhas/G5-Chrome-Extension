@@ -13,6 +13,15 @@ chrome.storage.sync.get('transferURL', function (obj) {
 
     function downloadAssets(assetLocations) {
 
+        uploadButton = document.getElementsByClassName('asset-uploader-wrapper')[0];
+        downloadButton = document.createElement('a');
+        downloadButtonWrapper = document.createElement('div');
+        downloadButtonWrapper.className = 'file-field input-field';
+        downloadButton.innerText = 'Zipping Assets....';
+        downloadButton.className = 'btn grey';
+        downloadButtonWrapper.appendChild(downloadButton)
+        uploadButton.appendChild(downloadButtonWrapper)
+
         var xhr = new XMLHttpRequest(),
             url = assetdownloadLocation,
             data = JSON.stringify(assetLocations)
@@ -20,21 +29,18 @@ chrome.storage.sync.get('transferURL', function (obj) {
         xhr.open("POST", url, true);
         xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
         xhr.onload = function () {
-            var data = JSON.parse(xhr.responseText);
-            if (xhr.status == "200") {
+            console.log(xhr.status);
+            if (xhr.status === 200) {
+                var data = JSON.parse(xhr.responseText);
                 console.log(data.url);
-                uploadButton = document.getElementsByClassName('asset-uploader-wrapper')[0];
-                downloadButton = document.createElement('a');
-                downloadButtonWrapper = document.createElement('div');
-                downloadButtonWrapper.className = 'file-field input-field';
                 //downloadButton.setAttribute('href', xhr.response.url)
+                downloadButton.innerText = 'Download Assets';
                 downloadButton.setAttribute('download', data.url);
                 downloadButton.setAttribute('href', data.url);
-                downloadButton.innerText = 'Download Assets';
                 downloadButton.className = 'green btn';
-                downloadButtonWrapper.appendChild(downloadButton)
-                uploadButton.appendChild(downloadButtonWrapper)
             } else {
+                downloadButton.className = 'red btn';
+                downloadButton.innerText = 'An Error Occured';
                 alert('An Error occured');
             }
         }
