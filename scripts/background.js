@@ -1,43 +1,32 @@
-//listen to short keys and run functions
-chrome.commands.onCommand.addListener(function (command) {
-    if (command == "wysiwyg") {
-        chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-            chrome.tabs.sendMessage(tabs[0].id, { action: "open_dialog_box" }, function (response) {
-                console.log(response);
-            });
-        });
+chrome.webRequest.onCompleted.addListener(function (details) {
+    //split the url on / and then combine the second to last and last one to get the "endpoint"
+    details.url.split("/");
+    details.endpoint = splitUrl[splitUrl.length - 3] + '/' + splitUrl[splitUrl.length - 2];
+    if (details.endpoint === 'api/widgets') {
+        //run a get to find out what widget is being editied
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", details.url, true);
+        xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+        xhr.onload = function () {
+            if (xhr.status === 200) {
+                var data = JSON.parse(xhr.responseText);
+                console.log(data);
+                //depending on the widget type inject the correct JS file to be used
+                injectWidgetJS(data.slug, details);
+
+            } else {
+                // there was an error
+            }
+        }
+        xhr.send(data);
+
     }
-    else if (command == "HubPOI") {
-    chrome.tabs.executeScript({ file: "scripts/jquery-3.2.1.min.js" }, function () {
-        chrome.tabs.executeScript({ file: "functions/point_of_interest.js" });
-        });
-    }
-    else if (command == "sidekiq") {
-        chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-            var currentURL = tabs[0].url;
-            // https://stackoverflow.com/questions/3689423/google-chrome-plugin-how-to-get-domain-from-url-tab-url
-            var domain = currentURL.match(/^[\w-]+:\/{2,}\[?[\w\.:-]+\]?(?::[0-9]*)?/)[0];
-            var url = domain + '/sidekiq/busy?poll=true';
-            chrome.tabs.create({ url: url });
-        });
-    }
-    else if (command == "redirects") {
-        chrome.tabs.executeScript({ file: "scripts/jquery-3.2.1.min.js" }, function () {
-            chrome.tabs.executeScript({ file: "functions/redirects.js" });
+}, { urls: ["<all_urls>"] });
+
+function injectWidgetJS(widgetSlug, details) {
+    if (widgetSlug == "html") {
+        chrome.tabs.sendMessage(details.tabid, { action: "open_dialog_box" }, function (response) {
+            console.log(response);
           });
     }
-    else if (command == "search") {
-        chrome.tabs.executeScript({ file: "functions/hub-Search.js" });
-    }
-    else if (command == "autoAlt") {
-        chrome.tabs.executeScript({ file: "scripts/jquery-3.2.1.min.js" }, function () {
-            chrome.tabs.executeScript({ file: "functions/auto_alt.js" });
-        });
-    }
-    else if (command == "seoUpdater") {
-        chrome.tabs.executeScript({ file: "scripts/jquery-3.2.1.min.js" }, function () {
-            chrome.tabs.executeScript({ file: "functions/seo_updater.js" });
-        });
-    }
-});
-
+}
