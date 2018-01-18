@@ -19,7 +19,7 @@ chrome.storage.sync.get('poikey', function (obj) {
                 match_branded_name(JSON.parse(xhr.responseText), location_name);
             }
             else {
-                alert('Something Went Wrong');
+                alert('Something Went Wrong with your location search');
             }
         }
         xhr.send();
@@ -30,6 +30,10 @@ chrome.storage.sync.get('poikey', function (obj) {
             console.log(data.results[i]);
             if (location_name == data.results[i].name) {
                 place_id_search(data.results[i].place_id);
+                break;
+            }
+            else if(i== Object.keys(data.results).length -1){
+                alert('We could not find your locations CID');
             }
         }
     }
@@ -50,7 +54,7 @@ chrome.storage.sync.get('poikey', function (obj) {
                 $('#location_google_cid').val(cidURL.split("cid=")[1]);
             }
             else {
-                alert('Something Went Wrong');
+                alert('Something went wrong with your Place ID request');
             }
         }
     }
