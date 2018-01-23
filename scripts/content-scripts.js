@@ -3,7 +3,7 @@
 chrome.extension.onMessage.addListener(function (msg, sender, sendResponse) {
     console.log(msg.action);
     if (msg.action == 'open_dialog_box') {
-        sendResponse({ farewell: "goodbye" });
+        sendResponse({ farewell: "goodbye" });       
         var s = document.createElement('script');
         s.src = chrome.extension.getURL('scripts/wysiwyg-script.js');
         (document.head || document.documentElement).appendChild(s);
