@@ -11,7 +11,8 @@ function checkCKE() {
 }
 function insertWYSIWYGButton() {
     //check if WYSIWYG Button exists
-    if ($("#cke_wysiwyg").length == 0) {
+    if ($(".cke_wysiwyg").length == 0) {
+        console.log('button is not placed yet')
         var b = '<span class="cke_toolgroup" role="presentation"><a class="cke_button cke_button__source"><span  class="cke_button_label cke_button__source_label cke_wysiwyg">WYSIWYG</span></a></span>';
         var wrappers = document.getElementsByClassName("cke_top");
         Object.keys(CKEDITOR.instances).forEach(function (key, i) {

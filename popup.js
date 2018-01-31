@@ -151,11 +151,11 @@ chrome.storage.sync.get(['poikey', 'transferURL'], function (obj) {
 $(function () {
   $('#save').click(function () {
     // Get a value saved in a form.
-    var theValue = $('#poikey').val();
+    var poikey = $('#poikey').val();
     var transferURL = $('#transferURL').val();
-    console.log(theValue);
+    console.log(poikey);
     // Check that there's some code there.
-    if (!theValue) {
+    if (!poikey) {
       console.log('Error: No value specified');
       return;
     }
@@ -164,9 +164,12 @@ $(function () {
       return;
     } 
     // Save it using the Chrome extension storage API.
-    chrome.storage.sync.set({ 'poikey': theValue , 'transferURL' : transferURL}, function () {
+    chrome.storage.sync.set({ 'poikey': poikey , 'transferURL' : transferURL}, function () {
       // Notify that we saved.
       console.log('Settings saved');
+      $('#save').addClass('btn-success');
+      $('#save').addClass('btn-success');
+      $("#save").html('Saved');
     });
 
   });
