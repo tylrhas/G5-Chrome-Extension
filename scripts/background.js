@@ -1,9 +1,3 @@
-//set global var for the last request to check its timestamp and tab id
-//use this listener to remove stuff from the global vars when the tab is closed
-//what happens when a window is closed witha  bunch of tabs in it 
-
-// chrome.tabs.onRemoved.addListener(function callback)
-
 chrome.webRequest.onCompleted.addListener(function (details) {
     console.log(details);
     console.log(details.tabId);
