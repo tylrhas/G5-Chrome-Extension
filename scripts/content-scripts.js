@@ -1,7 +1,7 @@
 //TODO
 //Fix the bug on save and then save and exit where it multiples the buttons by 2 
 chrome.extension.onMessage.addListener(function (msg, sender, sendResponse) {
-    console.log(msg.action);
+    console.log(msg);
     if (msg.action == 'open_dialog_box') {
         sendResponse({ farewell: "goodbye" });       
         var s = document.createElement('script');
@@ -20,8 +20,20 @@ chrome.extension.onMessage.addListener(function (msg, sender, sendResponse) {
             s.parentNode.removeChild(s);
         };
     }
-    else if (msg.action == 'open_hub') {
-        alert('auto alt');
+    else if (msg.action == 'enhance_ui') {
+        currentURL = window.location.href;
+        // https://stackoverflow.com/questions/3689423/google-chrome-plugin-how-to-get-domain-from-url-tab-url
+        domain = currentURL.match(/^[\w-]+:\/{2,}\[?[\w\.:-]+\]?(?::[0-9]*)?/)[0];
+        splitURL = currentURL.split('/'); 
+        urn = msg.urn;
+        hubURL = "https://g5-hub.herokuapp.com/admin/clients/"+urn;
+        changelogsURL = 'https://'+splitURL[2]+'/api/websites/'+splitURL[4]+'/changelogs';
+        sidekiqURL = domain + '/sidekiq/busy?poll=true';
+        hub = '<button href="'+ hubURL+'" target="_blank" class="btn">Hub</button>';
+        document.getElementsByClassName('version')[0].innerHTML(hub);
+        console.log(hubURL);
+        console.log(changelogsURL);
+        console.log(sidekiqURL);
     }
 });
 
