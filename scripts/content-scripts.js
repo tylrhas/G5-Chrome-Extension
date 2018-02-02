@@ -3,7 +3,7 @@
 chrome.extension.onMessage.addListener(function (msg, sender, sendResponse) {
     console.log(msg);
     if (msg.action == 'open_dialog_box') {
-        sendResponse({ farewell: "goodbye" });       
+        sendResponse({ farewell: "goodbye" });
         var s = document.createElement('script');
         s.src = chrome.extension.getURL('scripts/wysiwyg-script.js');
         (document.head || document.documentElement).appendChild(s);
@@ -24,13 +24,20 @@ chrome.extension.onMessage.addListener(function (msg, sender, sendResponse) {
         currentURL = window.location.href;
         // https://stackoverflow.com/questions/3689423/google-chrome-plugin-how-to-get-domain-from-url-tab-url
         domain = currentURL.match(/^[\w-]+:\/{2,}\[?[\w\.:-]+\]?(?::[0-9]*)?/)[0];
-        splitURL = currentURL.split('/'); 
+        splitURL = currentURL.split('/');
         urn = msg.urn;
-        hubURL = "https://g5-hub.herokuapp.com/admin/clients/"+urn;
-        changelogsURL = 'https://'+splitURL[2]+'/api/websites/'+splitURL[4]+'/changelogs';
+        hubURL = "https://g5-hub.herokuapp.com/admin/clients/" + urn;
+        changelogsURL = 'https://' + splitURL[2] + '/api/websites/' + splitURL[4] + '/changelogs';
         sidekiqURL = domain + '/sidekiq/busy?poll=true';
-        hub = '<button href="'+ hubURL+'" target="_blank" class="btn">Hub</button>';
-        document.getElementsByClassName('version')[0].innerHTML(hub);
+        hub = '<a href="' + hubURL + '" style="color:#fff !important;" target="_blank" class="btn" id="hub" >Hub</a>';
+        sidekiq = '<a href="' + sidekiqURL + '" style="color:#fff !important;" target="_blank" class="btn">Sidekiq</a>';
+        changelogs = '<a href="' + changelogsURL + '" style="color:#fff !important;" target="_blank" class="btn">Changelogs</a>';
+        //check if the buttons are placed already
+        if(!document.getElementById('hub')){
+            document.getElementsByClassName('version')[0].insertAdjacentHTML('afterbegin',hub);
+            document.getElementsByClassName('version')[0].insertAdjacentHTML('afterbegin',sidekiq);
+            document.getElementsByClassName('version')[0].insertAdjacentHTML('afterbegin',changelogs)
+        }
         console.log(hubURL);
         console.log(changelogsURL);
         console.log(sidekiqURL);

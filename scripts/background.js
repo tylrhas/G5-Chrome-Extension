@@ -36,21 +36,23 @@ chrome.webRequest.onCompleted.addListener(function (details) {
     else if (details.endpoint == "api/websites") {
         //tab id of -1 is the background script
         //run a get to find out what widget is being editied
-        var xhr = new XMLHttpRequest();
-        xhr.open("GET", details.url, true);
-        xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
-        xhr.send();
-        xhr.onload = function () {
-            var data = JSON.parse(xhr.responseText);
-            if (xhr.status === 200) {
+        if (details.tabId > 0) {
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", details.url, true);
+            xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+            xhr.send();
+            xhr.onload = function () {
                 var data = JSON.parse(xhr.responseText);
-                console.log(data);
-                //depending on the widget type inject the correct JS file to be used
-                injectEnhancedUi(data, details);
-            }
-            else {
-                // there was an error
-                console.log('there was an error');
+                if (xhr.status === 200) {
+                    var data = JSON.parse(xhr.responseText);
+                    console.log(data);
+                    //depending on the widget type inject the correct JS file to be used
+                    injectEnhancedUi(data, details);
+                }
+                else {
+                    // there was an error
+                    console.log('there was an error');
+                }
             }
         }
     }
@@ -82,7 +84,7 @@ function injectEnhancedUi(data, details) {
 
     var domain = details.url.match(/^[\w-]+:\/{2,}\[?[\w\.:-]+\]?(?::[0-9]*)?/)[0];
     var xhr = new XMLHttpRequest();
-    xhr.open("GET", domain+'/api/clients', true);
+    xhr.open("GET", domain + '/api/clients', true);
     xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
     xhr.send();
     xhr.onload = function () {
