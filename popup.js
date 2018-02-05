@@ -154,15 +154,7 @@ $(function () {
     var poikey = $('#poikey').val();
     var transferURL = $('#transferURL').val();
     console.log(poikey);
-    // Check that there's some code there.
-    if (!poikey) {
-      console.log('Error: No value specified');
-      return;
-    }
-    if (!transferURL) {
-      console.log('Error: No value specified');
-      return;
-    } 
+  
     // Save it using the Chrome extension storage API.
     chrome.storage.sync.set({ 'poikey': poikey , 'transferURL' : transferURL}, function () {
       // Notify that we saved.
