@@ -93,7 +93,7 @@ function injectEnhancedUi(data, details) {
             var data = JSON.parse(xhr.responseText);
             console.log(data);
             //depending on the widget type inject the correct JS file to be used
-            chrome.tabs.sendMessage(details.tabId, { action: "enhance_ui", urn: data.clients[0].urn }, function (response) {
+            chrome.tabs.sendMessage(details.tabId, { action: "enhance_ui", urn: data.clients[0].urn , cms: data.clients[0].cms_url }, function (response) {
                 console.log(response);
             });
         }
