@@ -3,8 +3,7 @@
 
   "name": "G5 Bookmarklets",
   "description": "Home of Bookmarklets for the G5 WIS Team",
-  "version": "1.3.8",
-
+  "version": "1.4",
   "icons": {
     "48": "icon.png"
   },
@@ -15,7 +14,7 @@
     }
   ],
   "permissions": [
-    "tabs", "<all_urls>","storage"
+    "tabs", "<all_urls>","storage", "webRequest", "webNavigation"
   ],
 
   "browser_action": {
@@ -25,7 +24,7 @@
 
   "background": {
     "scripts": ["scripts/background.js"],
-    "persistent": false
+    "persistent": true
   },
 
   "web_accessible_resources": [

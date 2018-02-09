@@ -48,6 +48,9 @@ padding-left: 35px;
     padding: 7px 12px;
     
 }
+.btn-success{
+    background-color: #5cb85c;
+}
 .btn:hover{
     background-color: #f69252 !important;
 }

@@ -1,7 +1,7 @@
 //TODO
 //Fix the bug on save and then save and exit where it multiples the buttons by 2 
 chrome.extension.onMessage.addListener(function (msg, sender, sendResponse) {
-    console.log(msg.action);
+    console.log(msg);
     if (msg.action == 'open_dialog_box') {
         sendResponse({ farewell: "goodbye" });
         var s = document.createElement('script');
@@ -20,8 +20,33 @@ chrome.extension.onMessage.addListener(function (msg, sender, sendResponse) {
             s.parentNode.removeChild(s);
         };
     }
-    else if (msg.action == 'open_hub') {
-        alert('auto alt');
+    else if (msg.action == 'enhance_ui') {
+        currentURL = window.location.href;
+        // https://stackoverflow.com/questions/3689423/google-chrome-plugin-how-to-get-domain-from-url-tab-url
+        domain = currentURL.match(/^[\w-]+:\/{2,}\[?[\w\.:-]+\]?(?::[0-9]*)?/)[0];
+        splitURL = currentURL.split('/');
+        cmsApp = splitURL[2].split('.')[0]
+        urn = msg.urn;
+        hubURL = "https://g5-hub.herokuapp.com/admin/clients/" + urn;
+        changelogsURL = 'https://' + splitURL[2] + '/api/websites/' + splitURL[4] + '/changelogs';
+        sidekiqURL = domain + '/sidekiq/busy?poll=true';
+        herokuURL = 'https://dashboard.heroku.com/apps/' + cmsApp;
+        hub = '<a href="' + hubURL + '" style="color:#fff !important;" target="_blank" class="btn" id="hub" >Hub</a>';
+        sidekiq = '<a href="' + sidekiqURL + '" style="color:#fff !important;" target="_blank" class="btn">Sidekiq</a>';
+        changelogs = '<a href="' + changelogsURL + '" style="color:#fff !important;" target="_blank" id="changelogs" class="btn">Changelogs</a>';
+        heroku = '<a href="' + herokuURL + '" style="color:#fff !important;" target="_blank" id="heroku" class="btn">Heroku</a>';
+        //check if the buttons are placed already
+        if(!document.getElementById('hub')){
+            document.getElementsByClassName('version')[0].insertAdjacentHTML('afterbegin',hub);
+            document.getElementsByClassName('version')[0].insertAdjacentHTML('afterbegin',sidekiq);
+            document.getElementsByClassName('version')[0].insertAdjacentHTML('afterbegin',changelogs);
+            document.getElementsByClassName('version')[0].insertAdjacentHTML('afterbegin',heroku);
+        }
+        else{
+            //check if the button URLs have changed for changelog
+            document.getElementById('changelogs').href = changelogsURL
+            console.log(document.getElementById('changelogs').href);
+        }
     }
 });
 
@@ -57,4 +82,5 @@ function replaceData(data) {
 
 function placeData(id, val) {
     document.getElementById(id).value = val;
+    //$('#submit-location-form').trigger('click');
 }
