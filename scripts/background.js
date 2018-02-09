@@ -69,7 +69,7 @@ function injectWidgetJS(widgetSlug, details) {
 }
 
 function isHTMLWidget(widgetSlug) {
-    if (widgetSlug == 'html' || widgetSlug == 'accordion' || widgetSlug == "") {
+    if (widgetSlug == 'html' || widgetSlug == 'accordion' || widgetSlug == "photo-cards") {
         return true;
     }
     else {
