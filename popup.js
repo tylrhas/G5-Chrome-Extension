@@ -5,6 +5,13 @@ function hub_poi() {
   });
 }
 
+function googleCID(){
+  chrome.tabs.executeScript({ file: "scripts/jquery-3.2.1.min.js" }, function () {
+    chrome.tabs.executeScript({ file: "functions/googleCID.js" });
+  });
+}
+
+
 function redirects() {
   chrome.tabs.executeScript({ file: "scripts/jquery-3.2.1.min.js" }, function () {
     chrome.tabs.executeScript({ file: "functions/redirects.js" });
@@ -137,6 +144,7 @@ document.getElementById('sidekiq').addEventListener('click', sidekiq);
 document.getElementById('search').addEventListener('click', hubSearch);
 document.getElementById('transfer').addEventListener('click', transfer);
 document.getElementById('changelogs').addEventListener('click', changelogs);
+document.getElementById('googleCID').addEventListener('click', googleCID);
 
 
 //set the input value
