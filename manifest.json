@@ -14,7 +14,7 @@
     }
   ],
   "permissions": [
-    "tabs", "<all_urls>","storage", "webRequest", "webNavigation"
+    "tabs", "<all_urls>","storage", "webRequest", "webNavigation", "downloads"
   ],
 
   "browser_action": {
