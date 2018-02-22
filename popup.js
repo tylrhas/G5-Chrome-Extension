@@ -186,10 +186,10 @@ function createChatmeterCSV(tabs) {
             else {
               //singledomain
               if (secure_domain) {
-                hub_location.WebsiteUrl = 'https://www.' + client_domain + '/' + vertical + '/' + data[i].city.toLowerCase() + '/' + data[i].state.toLowerCase() + '/' + custom_slug
+                hub_location.WebsiteUrl = 'https://www.' + client_domain + '/' + vertical + '/' + data[i].city.toLowerCase() + '/' + data[i].state.toLowerCase() + '/' + data[i].custom_slug
               }
               else {
-                hub_location.WebsiteUrl = 'http://www.' + client_domain + '/' + vertical + '/' + data[i].city.toLowerCase() + '/' + data[i].state.toLowerCase() + '/' + custom_slug
+                hub_location.WebsiteUrl = 'http://www.' + client_domain + '/' + vertical + '/' + data[i].city.toLowerCase() + '/' + data[i].state.toLowerCase() + '/' + data[i].custom_slug
               }
             }
             hub_location.PrimaryCategory = ''
