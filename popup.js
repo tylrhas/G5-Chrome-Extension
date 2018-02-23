@@ -1,4 +1,4 @@
-// var app = chrome.runtime.getBackgroundPage();
+//https://g5-hub.herokuapp.com/admin/clients/g5-c-injenfct-milestone-retirement-communities-client/locations.json?order=status_desc&page=8
 function hub_poi() {
   chrome.tabs.executeScript({ file: "scripts/jquery-3.2.1.min.js" }, function () {
     chrome.tabs.executeScript({ file: "functions/point_of_interest.js" });

@@ -28,24 +28,36 @@ chrome.extension.onMessage.addListener(function (msg, sender, sendResponse) {
         cmsApp = splitURL[2].split('.')[0]
         urn = msg.urn;
         hubURL = "https://g5-hub.herokuapp.com/admin/clients/" + urn;
-        changelogsURL = 'https://' + splitURL[2] + '/api/websites/' + splitURL[4] + '/changelogs';
+        if (msg.changelogs) {
+            changelogsURL = 'https://' + splitURL[2] + '/api/websites/' + splitURL[4] + '/changelogs';
+            changelogs = '<a href="' + changelogsURL + '" style="color:#fff !important;" target="_blank" id="changelogs" class="btn">Changelogs</a>';
+        }
         sidekiqURL = domain + '/sidekiq/busy?poll=true';
         herokuURL = 'https://dashboard.heroku.com/apps/' + cmsApp;
         hub = '<a href="' + hubURL + '" style="color:#fff !important;" target="_blank" class="btn" id="hub" >Hub</a>';
         sidekiq = '<a href="' + sidekiqURL + '" style="color:#fff !important;" target="_blank" class="btn">Sidekiq</a>';
-        changelogs = '<a href="' + changelogsURL + '" style="color:#fff !important;" target="_blank" id="changelogs" class="btn">Changelogs</a>';
         heroku = '<a href="' + herokuURL + '" style="color:#fff !important;" target="_blank" id="heroku" class="btn">Heroku</a>';
         //check if the buttons are placed already
-        if(!document.getElementById('hub')){
-            document.getElementsByClassName('version')[0].insertAdjacentHTML('afterbegin',hub);
-            document.getElementsByClassName('version')[0].insertAdjacentHTML('afterbegin',sidekiq);
-            document.getElementsByClassName('version')[0].insertAdjacentHTML('afterbegin',changelogs);
-            document.getElementsByClassName('version')[0].insertAdjacentHTML('afterbegin',heroku);
+        if (!document.getElementById('hub')) {
+            document.getElementsByClassName('version')[0].insertAdjacentHTML('afterbegin', hub);
+            document.getElementsByClassName('version')[0].insertAdjacentHTML('afterbegin', sidekiq);
+            if (msg.changelogs) {
+                document.getElementsByClassName('version')[0].insertAdjacentHTML('afterbegin', changelogs);
+            }
+
+            document.getElementsByClassName('version')[0].insertAdjacentHTML('afterbegin', heroku);
         }
-        else{
+        else {
             //check if the button URLs have changed for changelog
-            document.getElementById('changelogs').href = changelogsURL
-            console.log(document.getElementById('changelogs').href);
+            if (msg.changelogs) {
+                if (document.getElementById('changelogs') == null) {
+                    document.getElementsByClassName('version')[0].insertAdjacentHTML('afterbegin', changelogs);
+                }
+                else {
+                    document.getElementById('changelogs').href = changelogsURL
+                    console.log(document.getElementById('changelogs').href);
+                }
+            }
         }
     }
 });
