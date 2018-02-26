@@ -135,68 +135,46 @@ function chatmeterCSV() {
 }
 
 function createChatmeterCSV(tabs) {
-  var currentURL = tabs[0].url;
+  currentURL = tabs[0].url.split("/");
+  var clientURL = currentURL[0]+"//"+currentURL[2]+"/"+currentURL[4]+"/"+currentURL[5]+".json";
   var csv_object = []
   var xhr = new XMLHttpRequest();
-  xhr.open("GET", currentURL + '.json', true);
+  xhr.open("GET", clientURL, true);
   xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
   xhr.send();
   xhr.onload = function () {
     var data = JSON.parse(xhr.responseText);
     if (xhr.status === 200) {
+      data = data.client
       console.log(data);
       if (data.domain_type == 'SingleDomainClient') {
-        client_domain = data.naked_domain
+        client_domain = data.domain
+        console.log(data)
         secure_domain = data.secure_domain
-        vertical = data.vertical.toLowerCase();
       }
+      vertical = data.vertical.toLowerCase();
       client_Name = data.branded_name;
-      //get the location information
-      var xhr2 = new XMLHttpRequest();
-      xhr2.open("GET", currentURL + '/locations.json', true);
-      xhr2.setRequestHeader('Content-type', 'application/json; charset=utf-8');
-      xhr2.send();
-      xhr2.onload = function () {
-        if (xhr.status === 200) {
-          var data = JSON.parse(xhr2.responseText);
-          for (i = 0; i < data.length; i++) {
-            if(data[i].status == "Pending"){
+      locations = data.locations
+          for (i = 0; i < locations.length; i++) {
+            if(locations[i].status == "Pending"){
               //location is pending
             hub_location = {};
-            hub_location.ClientLocationId = data[i].urn
+            hub_location.ClientLocationId = locations[i].urn
             hub_location.ClientName = client_Name
-            hub_location.BusinessName = data[i].name
-            hub_location.street_address_1 = data[i].street_address_1
-            hub_location.Suite = data[i].street_address_2
-            hub_location.city = data[i].city
-            hub_location.state = data[i].state
-            hub_location.postal_code = data[i].postal_code
-            hub_location.Country = data[i].country
-            hub_location.Phone = data[i].phone_number
+            hub_location.BusinessName = locations[i].name
+            hub_location.street_address_1 = locations[i].street_address_1
+            hub_location.Suite = locations[i].street_address_2
+            hub_location.city = locations[i].city
+            hub_location.state = locations[i].state
+            hub_location.postal_code = locations[i].postal_code
+            hub_location.Country = locations[i].country
+            hub_location.Phone = locations[i].phone_number
             hub_location.AlternatePhone = ''
-            if (typeof client_domain === 'undefined') {
-              //multidomain
-              if (data[i].secure_domain) {
-                hub_location.WebsiteUrl = 'https://www.' + data[i].naked_domain
-              }
-              else {
-                hub_location.WebsiteUrl = 'http://www.' + data[i].naked_domain
-              }
-            }
-            else {
-              //singledomain
-              if (secure_domain) {
-                hub_location.WebsiteUrl = 'https://www.' + client_domain + '/' + vertical + '/' + data[i].state.replace(/\s+/g, '-').toLowerCase() + '/' + data[i].city.replace(/\s+/g, '-').toLowerCase() + '/' + data[i].custom_slug
-              }
-              else {
-                hub_location.WebsiteUrl = 'http://www.' + client_domain + '/' + vertical + '/' + data[i].state.replace(/\s+/g, '-').toLowerCase() + '/' + data[i].city.replace(/\s+/g, '-').toLowerCase() + '/' + data[i].custom_slug
-              }
-            }
+            hub_location.WebsiteUrl = locations[i].home_page_url
             hub_location.PrimaryCategory = ''
             hub_location.AuditOnly = 'FALSE'
             csv_object.push(hub_location);
             console.log(csv_object);
-          }
           }
         }
         //create CSV
@@ -222,7 +200,6 @@ function createChatmeterCSV(tabs) {
       }
     }
   }
-}
 
 //event listeners
 document.getElementById('hubpoi').addEventListener('click', hub_poi);
