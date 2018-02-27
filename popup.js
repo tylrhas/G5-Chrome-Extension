@@ -174,12 +174,10 @@ function createChatmeterCSV(tabs) {
             hub_location.PrimaryCategory = ''
             hub_location.AuditOnly = 'FALSE'
             csv_object.push(hub_location);
-            console.log(csv_object);
           }
         }
         //create CSV
         csv = Papa.unparse(csv_object);
-        console.log(csv);
         file = new Blob([csv], {type: "text/csv"});
         url = URL.createObjectURL(file);
         //date time for the file download
@@ -190,8 +188,6 @@ function createChatmeterCSV(tabs) {
         var hour = date.getHours();
         var minutes = date.getMinutes();
         var secconds = date.getSeconds()
-        console.log(file)
-        console.log(client_Name+'.csv');
         chrome.downloads.download({
           url: url,
           filename : client_Name+'_'+month+'_'+day+'_'+year+'_'+hour+'_'+minutes+'_'+secconds+'.csv'
