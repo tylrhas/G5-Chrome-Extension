@@ -214,17 +214,19 @@ chrome.storage.sync.get(['poikey', 'transferURL', 'def_user'], function (obj) {
   console.log(obj);
   $('#poikey').val(obj.poikey);
   $('#transferURL').val(obj.transferURL);
-  $('#def_user').val(obj.def_user);
+
   // set the default active tab
   if(obj.def_user == 'SEO'){
     //set active tab to SEO 
     $('#seo_content').addClass('active');
     $('#seo_tab').addClass('active');  
+    $('#def_user').val(obj.def_user);
   }
   else{
     //set active tab to WIS
     $('#wis').addClass('active');
-    $('#wis_tab').addClass('active');    
+    $('#wis_tab').addClass('active'); 
+    $('#def_user').val('WIS');   
   }
 });
 
