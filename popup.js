@@ -1,4 +1,3 @@
-//https://g5-hub.herokuapp.com/admin/clients/g5-c-injenfct-milestone-retirement-communities-client/locations.json?order=status_desc&page=8
 function hub_poi() {
   chrome.tabs.executeScript({ file: "scripts/jquery-3.2.1.min.js" }, function () {
     chrome.tabs.executeScript({ file: "functions/point_of_interest.js" });
@@ -10,7 +9,6 @@ function googleCID() {
     chrome.tabs.executeScript({ file: "functions/googleCID.js" });
   });
 }
-
 
 function redirects() {
   chrome.tabs.executeScript({ file: "scripts/jquery-3.2.1.min.js" }, function () {
@@ -204,10 +202,6 @@ document.getElementById('wysiwyg').addEventListener('click', wysiwyg);
 document.getElementById('seo').addEventListener('click', seo);
 document.getElementById('structured_data').addEventListener('click', structured_data);
 document.getElementById('sidekiq').addEventListener('click', sidekiq);
-//document.getElementById('copy').addEventListener('click', copy);
-//document.getElementById('open_hub').addEventListener('click', openHub);
-//document.getElementById('autoalt').addEventListener('click', autoalt);
-//document.getElementById('alt').addEventListener('click', alt);
 document.getElementById('search').addEventListener('click', hubSearch);
 document.getElementById('transfer').addEventListener('click', transfer);
 document.getElementById('changelogs').addEventListener('click', changelogs);
