@@ -16,10 +16,10 @@
   <div class="col-xs-4 no-padding">
     <ul class="nav nav-stacked">
       <li>
-        <a class="active" data-toggle="tab" href="#wcs">WIS</a>
+        <a id="wis_tab" data-toggle="tab" href="#wis">WIS</a>
       </li>
       <li>
-        <a data-toggle="tab" href="#seo_tab">SEO</a>
+        <a id="seo_tab" data-toggle="tab" href="#seo_content">SEO</a>
       </li>
       <li>
         <a data-toggle="tab" href="#dev">Dev/Support</a>
@@ -38,22 +38,16 @@
 
   <div class="tab-content col-xs-8">
 
-    <div id="wcs" class="tab-pane fade in active">
+    <div id="wis" class="tab-pane fade in">
       <div class="row">
         <button class="btn" id="wysiwyg">WYSIWYG 3 in 1</button>
       </div>
-      <!-- <div class="row">
-        <button class="btn" id="autoalt">Auto Alt</button>
-      </div> -->
       <div class="row">
         <button class="btn" id="hubpoi">Hub Places Of Interest</button>
       </div>
       <div class="row">
         <button class="btn" id="redirects">Auto Redirects</button>
       </div>
-      <!-- <div class="row">
-        <button class="btn" id="alt">Gallery Auto Alt</button>
-      </div> -->
       <div class="row">
         <button class="btn" id="search">Hub Search</button>
       </div>
@@ -70,7 +64,7 @@
         <button class="btn" id="chatmeterCSV">Chatmeter CSV</button>
       </div>
     </div>
-    <div id="seo_tab" class="tab-pane fade in">
+    <div id="seo_content" class="tab-pane fade in">
       <div class="row">
         <button class="btn" id="seo">SEO Updater</button>
       </div>
@@ -82,12 +76,6 @@
       <div class="row">
         <button class="btn" id="sidekiq">Open Sidekiq</button>
       </div>
-      <!-- <div class="row">
-            <button class="btn" id="heroku">Open Heroku</button>
-          </div>
-          <div class="row">
-            <button class="btn" id="open_hub">Open Hub</button>
-          </div> -->
       <div class="row">
         <button class="btn" id="transfer">Asset Downloader (BETA)</button>
       </div>
@@ -103,6 +91,13 @@
           <label class="col-md-4 control-label" for="textinput">URL for Asset Downloader</label>
           <div class="col-md-4">
             <input id="transferURL" name="transferURL" type="text" placeholder="transferURL" class="form-control input-md">
+          </div>
+          <div class="col-md-4">
+            <label for="sel1">Select list:</label>
+            <select class="form-control" id="def_user">
+              <option value="WIS">WIS</option>
+              <option value="SEO">SEO</option>
+            </select>
           </div>
         </div>
       </form>

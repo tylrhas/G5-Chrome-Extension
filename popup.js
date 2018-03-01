@@ -210,10 +210,22 @@ document.getElementById('chatmeterCSV').addEventListener('click', chatmeterCSV);
 
 
 //set the input value
-chrome.storage.sync.get(['poikey', 'transferURL'], function (obj) {
+chrome.storage.sync.get(['poikey', 'transferURL', 'def_user'], function (obj) {
   console.log(obj);
   $('#poikey').val(obj.poikey);
   $('#transferURL').val(obj.transferURL);
+  $('#def_user').val(obj.def_user);
+  // set the default active tab
+  if(obj.def_user == 'SEO'){
+    //set active tab to SEO 
+    $('#seo_content').addClass('active');
+    $('#seo_tab').addClass('active');  
+  }
+  else{
+    //set active tab to WIS
+    $('#wis').addClass('active');
+    $('#wis_tab').addClass('active');    
+  }
 });
 
 
@@ -223,10 +235,11 @@ $(function () {
     // Get a value saved in a form.
     var poikey = $('#poikey').val();
     var transferURL = $('#transferURL').val();
-    console.log(poikey);
+    var def_user = $('#def_user').val();
+    console.log(def_user);
 
     // Save it using the Chrome extension storage API.
-    chrome.storage.sync.set({ 'poikey': poikey, 'transferURL': transferURL }, function () {
+    chrome.storage.sync.set({ 'poikey': poikey, 'transferURL': transferURL, 'def_user': def_user }, function () {
       // Notify that we saved.
       console.log('Settings saved');
       $('#save').addClass('btn-success');
