@@ -1,10 +1,25 @@
 // @ts-check
 //import in the functions
+
+//WIS Button Function Imports
+import {wysiwyg} from './js/popup/wysiwyg.js';
 import {hub_poi} from './js/popup/hub_poi.js';
+import {redirects} from './js/popup/auto_redirects.js';
+import {hubSearch} from './js/popup/hub_search.js';
+import {hubUpdater} from './js/popup/hub_updater.js';
+import {googleCID} from './js/popup/google_cid.js';
+import {chatmeterCSV}  from './js/popup/chatmeter.js'
 
 
-//event listeners
+//WIS Click Event Listeners
+$('#wysiwyg').click(wysiwyg);
 $('#hubpoi').click(hub_poi);
+$('#redirects').click(redirects);
+$('#search').click(hubSearch);
+$('#googleCID').click(googleCID);
+$('#chatmeterCSV').click(chatmeterCSV);
+
+
 
 // document.getElementById('redirects').addEventListener('click', redirects);
 // document.getElementById('wysiwyg').addEventListener('click', wysiwyg);
@@ -38,13 +53,13 @@ $(function () {
 
   });
 
-  //set the input value
+  //get the input value
   chrome.storage.sync.get(['poikey', 'transferURL', 'def_user'], function (obj) {
     console.log(obj);
     $('#poikey').val(obj.poikey);
     $('#transferURL').val(obj.transferURL);
 
-    // set the default active tab
+    //set the default active tab
     if (obj.def_user == 'SEO') {
       //set active tab to SEO 
       $('#seo_content').addClass('active');
@@ -58,5 +73,37 @@ $(function () {
       $('#def_user').val('WIS');
     }
   });
+
+    // The event listener for the file upload
+    document.getElementById('csvUpload').addEventListener('change', upload, false);
+
+    // Method that checks that the browser supports the HTML5 File API
+    function browserSupportFileUpload() {
+      var isCompatible = false;
+      if (window.File && window.FileReader && window.FileList && window.Blob) {
+        isCompatible = true;
+      }
+      return isCompatible;
+    }
+  
+    // Method that reads and processes the selected file
+    function upload(evt) {
+      if (!browserSupportFileUpload()) {
+        alert('The File APIs are not fully supported in this browser!');
+      } else {
+        var data = null;
+        var file = evt.target.files[0];
+        var reader = new FileReader();
+        reader.readAsText(file);
+        reader.onload = function (event) {
+          var csvData = event.target.result;
+          var data = Papa.parse(csvData);
+          $('#hubUpdater').click(function () {
+            console.log(data.data);
+            hubUpdater(data.data);
+          });
+        }
+      }
+    }
 
 });

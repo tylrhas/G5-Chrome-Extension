@@ -1,39 +1,4 @@
-$(document).ready(function () {
-  // The event listener for the file upload
-  document.getElementById('csvUpload').addEventListener('change', upload, false);
-
-  // Method that checks that the browser supports the HTML5 File API
-  function browserSupportFileUpload() {
-    var isCompatible = false;
-    if (window.File && window.FileReader && window.FileList && window.Blob) {
-      isCompatible = true;
-    }
-    return isCompatible;
-  }
-
-  // Method that reads and processes the selected file
-  function upload(evt) {
-    if (!browserSupportFileUpload()) {
-      alert('The File APIs are not fully supported in this browser!');
-    } else {
-      var data = null;
-      var file = evt.target.files[0];
-      var reader = new FileReader();
-      reader.readAsText(file);
-      reader.onload = function (event) {
-        var csvData = event.target.result;
-        var data = Papa.parse(csvData);
-        $('#hubUpdater').click(function () {
-          console.log(data.data);
-          hubUpdater(data.data);
-        });
-      }
-    }
-  }
-});
-
-//Begin Hubupdater functions
-function hubUpdater(csvData) {
+export function hubUpdater(csvData) {
     //remove the header from the array
     let header = csvData.shift();
     for (var i = 0; i < csvData.length; i++) {
@@ -67,4 +32,3 @@ function hubUpdater(csvData) {
       }
     return str.join("&");
   }
-  //end hub updater functions

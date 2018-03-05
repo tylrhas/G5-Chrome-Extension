@@ -1,4 +1,4 @@
-function chatmeterCSV() {
+export function chatmeterCSV() {
     chrome.tabs.query({ active: true, currentWindow: true }, createChatmeterCSV);
   }
 
