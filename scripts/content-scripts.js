@@ -1,5 +1,3 @@
-//TODO
-//Fix the bug on save and then save and exit where it multiples the buttons by 2 
 chrome.extension.onMessage.addListener(function (msg, sender, sendResponse) {
     console.log(msg);
     if (msg.action == 'open_dialog_box') {

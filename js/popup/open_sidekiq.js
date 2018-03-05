@@ -1,4 +1,4 @@
-function sidekiq() {
+export function sidekiq() {
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
       var currentURL = tabs[0].url;
       // https://stackoverflow.com/questions/3689423/google-chrome-plugin-how-to-get-domain-from-url-tab-url

@@ -1,4 +1,4 @@
-function changelogs() {
+export function changelogs() {
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
       var currentURL = tabs[0].url;
       splitURL = currentURL.split('/');

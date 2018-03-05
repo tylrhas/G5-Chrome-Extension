@@ -8,10 +8,18 @@ import {redirects} from './js/popup/auto_redirects.js';
 import {hubSearch} from './js/popup/hub_search.js';
 import {hubUpdater} from './js/popup/hub_updater.js';
 import {googleCID} from './js/popup/google_cid.js';
-import {chatmeterCSV}  from './js/popup/chatmeter.js'
+import {chatmeterCSV}  from './js/popup/chatmeter.js';
 
+//SEO Button Function Imports
+import {seo_updater} from './js/popup/seo_updater.js';
+import {structured_data} from './js/popup/structured_data.js';
 
-//WIS Click Event Listeners
+//Support Button Function Imports
+import {sidekiq} from './js/popup/open_sidekiq.js';
+import {changelogs} from './js/popup/changelogs.js';
+import {download_assets} from './js/popup/asset_downloader.js'
+
+//WIS Click Listeners
 $('#wysiwyg').click(wysiwyg);
 $('#hubpoi').click(hub_poi);
 $('#redirects').click(redirects);
@@ -19,18 +27,15 @@ $('#search').click(hubSearch);
 $('#googleCID').click(googleCID);
 $('#chatmeterCSV').click(chatmeterCSV);
 
+//SEO Click Listeners
+$('#seo_updater').click(seo_updater);
+$('#structured_data').click(structured_data);
 
 
-// document.getElementById('redirects').addEventListener('click', redirects);
-// document.getElementById('wysiwyg').addEventListener('click', wysiwyg);
-// document.getElementById('seo').addEventListener('click', seo);
-// document.getElementById('structured_data').addEventListener('click', structured_data);
-// document.getElementById('sidekiq').addEventListener('click', sidekiq);
-// document.getElementById('search').addEventListener('click', hubSearch);
-// document.getElementById('transfer').addEventListener('click', transfer);
-// document.getElementById('changelogs').addEventListener('click', changelogs);
-// document.getElementById('googleCID').addEventListener('click', googleCID);
-// document.getElementById('chatmeterCSV').addEventListener('click', chatmeterCSV);
+//Support Click Listeners
+$('#sidekiq').click(sidekiq);
+$('#changelogs').click(changelogs);
+$('#transfer').click(download_assets);
 
 //save function
 $(function () {
