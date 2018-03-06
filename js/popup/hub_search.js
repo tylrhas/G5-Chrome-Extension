@@ -1,3 +1,3 @@
 export function hubSearch() {
-    chrome.tabs.executeScript({ file: "functions/hub-Search.js" });
+    chrome.tabs.executeScript({ file: "js/executable_scripts/hub-Search.js" });
   }
