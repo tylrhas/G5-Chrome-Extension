@@ -3,16 +3,7 @@ chrome.extension.onMessage.addListener(function (msg, sender, sendResponse) {
     if (msg.action == 'open_dialog_box') {
         sendResponse({ farewell: "goodbye" });
         var s = document.createElement('script');
-        s.src = chrome.extension.getURL('scripts/wysiwyg-script.js');
-        (document.head || document.documentElement).appendChild(s);
-        s.onload = function () {
-            s.parentNode.removeChild(s);
-        };
-    }
-    //open the hub 
-    else if (msg.action == 'open_hub') {
-        var s = document.createElement('script');
-        s.src = chrome.extension.getURL('functions/open_hub.js');
+        s.src = chrome.extension.getURL('js/injected_scripts/wysiwyg-script.js');
         (document.head || document.documentElement).appendChild(s);
         s.onload = function () {
             s.parentNode.removeChild(s);
