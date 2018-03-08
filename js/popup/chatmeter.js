@@ -13,16 +13,17 @@ export function chatmeterCSV() {
     xhr.onload = function () {
       var data = JSON.parse(xhr.responseText);
       if (xhr.status === 200) {
-        data = data.client
+        data = data.client;
         console.log(data);
         if (data.domain_type == 'SingleDomainClient') {
-          varclient_domain = data.domain
-          console.log(data)
-          var secure_domain = data.secure_domain
+          var client_domain = data.domain;
+          console.log(data);
+          var secure_domain = data.secure_domain;
         }
         var vertical = data.vertical.toLowerCase();
         var client_Name = data.branded_name;
-        locations = data.locations
+        var locations = data.locations;
+        var i;
             for (i = 0; i < locations.length; i++) {
               if(locations[i].status == "Pending"){
                 //location is pending
@@ -45,9 +46,9 @@ export function chatmeterCSV() {
             }
           }
           //create CSV
-          csv = Papa.unparse(csv_object);
-          file = new Blob([csv], {type: "text/csv"});
-          url = URL.createObjectURL(file);
+          var csv = Papa.unparse(csv_object);
+          var file = new Blob([csv], {type: "text/csv"});
+          var url = URL.createObjectURL(file);
           //date time for the file download
           var date = new Date();
           var year = date.getFullYear();
