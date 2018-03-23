@@ -13,7 +13,7 @@ chrome.extension.onMessage.addListener(function (msg, sender, sendResponse) {
         currentURL = window.location.href;
         // https://stackoverflow.com/questions/3689423/google-chrome-plugin-how-to-get-domain-from-url-tab-url
         domain = currentURL.match(/^[\w-]+:\/{2,}\[?[\w\.:-]+\]?(?::[0-9]*)?/)[0];
-        splitURL = currentURL.split('/');
+        var splitURL = currentURL.split('/');
         cmsApp = splitURL[2].split('.')[0]
         urn = msg.urn;
         hubURL = "https://g5-hub.herokuapp.com/admin/clients/" + urn;
@@ -30,6 +30,14 @@ chrome.extension.onMessage.addListener(function (msg, sender, sendResponse) {
         if (!document.getElementById('hub')) {
             document.getElementsByClassName('version')[0].insertAdjacentHTML('afterbegin', hub);
             document.getElementsByClassName('version')[0].insertAdjacentHTML('afterbegin', sidekiq);
+
+            var s = document.createElement('script');
+            s.src = chrome.extension.getURL('js/injected_scripts/changelog-check.js');
+            (document.head || document.documentElement).appendChild(s);
+            s.onload = function () {
+                s.parentNode.removeChild(s);
+            };
+
             if (msg.changelogs) {
                 document.getElementsByClassName('version')[0].insertAdjacentHTML('afterbegin', changelogs);
             }
@@ -50,6 +58,7 @@ chrome.extension.onMessage.addListener(function (msg, sender, sendResponse) {
         }
     }
 });
+
 
 //script for hub updater
 if (window.location.host == "g5-hub.herokuapp.com") {
