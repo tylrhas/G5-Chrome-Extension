@@ -1,14 +1,4 @@
-// addChangelogCheckButton()
 hookButtonClick()
-
-function addChangelogCheckButton() {
-  $('.copy-btns').each(function (index) {
-    var buttonHTML = '<button class="btn check-staging">Check Changelogs</button>'
-    $(this).prepend(buttonHTML)
-  })
-  hookButtonClick()
-}
-
 function hookButtonClick() {
   $('.copy-to-production-btn').click(function () {
     $('.sa-confirm-button-container .confirm').prop("disabled", true)

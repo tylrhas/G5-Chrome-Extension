@@ -26,17 +26,19 @@ chrome.extension.onMessage.addListener(function (msg, sender, sendResponse) {
         hub = '<a href="' + hubURL + '" style="color:#fff !important;" target="_blank" class="btn" id="hub" >Hub</a>';
         sidekiq = '<a href="' + sidekiqURL + '" style="color:#fff !important;" target="_blank" class="btn">Sidekiq</a>';
         heroku = '<a href="' + herokuURL + '" style="color:#fff !important;" target="_blank" id="heroku" class="btn">Heroku</a>';
+        console.log('loading')
+        var s = document.createElement('script');
+        s.src = chrome.extension.getURL('js/injected_scripts/changelog-check.js');
+        (document.head || document.documentElement).appendChild(s);
+        s.onload = function () {
+            s.parentNode.removeChild(s);
+        };
+
+
         //check if the buttons are placed already
         if (!document.getElementById('hub')) {
             document.getElementsByClassName('version')[0].insertAdjacentHTML('afterbegin', hub);
             document.getElementsByClassName('version')[0].insertAdjacentHTML('afterbegin', sidekiq);
-
-            var s = document.createElement('script');
-            s.src = chrome.extension.getURL('js/injected_scripts/changelog-check.js');
-            (document.head || document.documentElement).appendChild(s);
-            s.onload = function () {
-                s.parentNode.removeChild(s);
-            };
 
             if (msg.changelogs) {
                 document.getElementsByClassName('version')[0].insertAdjacentHTML('afterbegin', changelogs);
