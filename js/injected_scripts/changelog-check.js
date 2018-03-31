@@ -1,4 +1,15 @@
 hookButtonClick()
+$('.show-staging-btn').click(function () {
+  if ($(this).hasClass('open')) {
+    var websiteRow =  $(this).parents('.website-index-row').find('.edit-button')
+    var websiteIDs = $.map(websiteRow, function (val, i) {
+      var href = $(websiteRow[i]).attr('href');
+      var regex = /\/(\d*)$/; // caputres digits at the end preceeded by a forward slash
+      var match = regex.exec(href);
+      return match[1];
+    })
+  }
+})
 function hookButtonClick() {
   $('.copy-to-production-btn').click(function () {
     $('.sa-confirm-button-container .confirm').prop("disabled", true)
