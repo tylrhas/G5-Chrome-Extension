@@ -2,12 +2,42 @@ hookButtonClick()
 $('.show-staging-btn').click(function () {
   if ($(this).hasClass('open')) {
     var websiteRow =  $(this).parents('.website-index-row').find('.edit-button')
-    var websiteIDs = $.map(websiteRow, function (val, i) {
-      var href = $(websiteRow[i]).attr('href');
-      var regex = /\/(\d*)$/; // caputres digits at the end preceeded by a forward slash
-      var match = regex.exec(href);
-      return match[1];
-    })
+    $(this).parents('.website-index-row').find('.copy-to-production-btn').click(function () {
+      var websiteIDs = $.map(websiteRow, function (val, i) {
+        var href = $(websiteRow[i]).attr('href');
+        var regex = /\/(\d*)$/; // caputres digits at the end preceeded by a forward slash
+        var match = regex.exec(href);
+        return match[1];
+      })
+      $('.sa-confirm-button-container .confirm').prop("disabled", true)
+      compareChangeLogs(websiteIDs).then(function (values) {
+        console.log(values)
+        if (values[0].changelogs.length !== 0 && values[1].changelogs.length !== 0) {
+          var productionPublishDate = values[0].changelogs[0].created_at
+          var StagingFirstPublishDate = values[1].changelogs[values[1].changelogs.length - 1].created_at
+          console.log(productionPublishDate)
+          console.log(StagingFirstPublishDate)
+  
+          if ((new Date(productionPublishDate).getTime() > new Date(StagingFirstPublishDate).getTime())) {
+            $('.sa-confirm-button-container .confirm').prop("disabled", false)
+            $('.sa-confirm-button-container .confirm').addClass('red')
+            var alertHTML = '<h5 style="display: block; color: red; font-weight: bold; text-transform: uppercase; font-size: 106%;margin-top: 35px;">Warning! Edits have been made to production</h5><p>Please make sure they have also been made to staging</p>'
+            $('.sweet-alert p:first').append(alertHTML)
+          } else {
+            $('.sa-confirm-button-container .confirm').prop("disabled", false)
+            var alertHTML = '<h5 style="display: block; color: green; font-weight: bold; text-transform: uppercase; font-size: 106%;margin-top: 35px;">No changes have been made to production</h5>'
+            $('.sweet-alert p:first').append(alertHTML)
+          }
+        } else {
+          $('.sa-confirm-button-container .confirm').prop("disabled", false)
+          $('.sa-confirm-button-container .confirm').addClass('red')
+          var alertHTML = '<h5 style="display: block; color: red; font-weight: bold; text-transform: uppercase; font-size: 106%;margin-top: 35px;">No publish date for production or staging</h5>'
+            $('.sweet-alert p:first').append(alertHTML)
+          console.log('no publish Date')
+        }
+  
+      })
+    }) 
   }
 })
 function hookButtonClick() {
