@@ -4,6 +4,7 @@ chrome.webRequest.onCompleted.addListener(function (details) {
     //request is not from background script 
     //split the url on / and then combine the second to last and last one to get the "endpoint"
     splitUrl = details.url.split("/");
+    console.log(splitUrl[2])
     details.endpoint = splitUrl[splitUrl.length - 3] + '/' + splitUrl[splitUrl.length - 2];
     console.log(details.endpoint)
     details.fullendpoint = splitUrl[splitUrl.length - 2] + '/' + splitUrl[splitUrl.length - 1];
@@ -54,8 +55,8 @@ chrome.webRequest.onCompleted.addListener(function (details) {
             }
         }
     }
-    else if(details.fullendpoint == "api/websites" ){
-         //tab id of -1 is the background script
+    else if (details.fullendpoint == "api/websites") {
+        //tab id of -1 is the background script
         //run a get to find out what widget is being editied
         if (details.tabId > 0) {
             var xhr = new XMLHttpRequest();
@@ -78,9 +79,14 @@ chrome.webRequest.onCompleted.addListener(function (details) {
         }
 
     }
+    else if (splitUrl[2] === 'g5-hub.herokuapp.com' && splitUrl[splitUrl.length -1] === 'updatables') {
+        //inject the sync all button
+        console.log('We are on the right page')
+        
+    }
 }, { urls: ["<all_urls>"] });
 
-function injectWidgetJS(widgetSlug, details) {
+function injectWidgetJS (widgetSlug, details) {
     if (isHTMLWidget(widgetSlug) && details.method == "GET") {
         chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
             chrome.tabs.sendMessage(tabs[0].id, { action: "open_dialog_box" }, function (response) {
@@ -90,7 +96,7 @@ function injectWidgetJS(widgetSlug, details) {
     }
 }
 
-function isHTMLWidget(widgetSlug) {
+function isHTMLWidget (widgetSlug) {
     if (widgetSlug == 'html' || widgetSlug == 'accordion' || widgetSlug == "photo-cards") {
         return true;
     }
@@ -100,7 +106,7 @@ function isHTMLWidget(widgetSlug) {
 
 }
 
-function injectEnhancedUi(data, details, changelogs) {
+function injectEnhancedUi (data, details, changelogs) {
     console.log('data');
     console.log(data);
 
@@ -115,7 +121,7 @@ function injectEnhancedUi(data, details, changelogs) {
             var data = JSON.parse(xhr.responseText);
             console.log(data);
             //depending on the widget type inject the correct JS file to be used
-            chrome.tabs.sendMessage(details.tabId, { action: "enhance_ui", urn: data.clients[0].urn , cms: data.clients[0].cms_url, changelogs:changelogs }, function (response) {
+            chrome.tabs.sendMessage(details.tabId, { action: "enhance_ui", urn: data.clients[0].urn, cms: data.clients[0].cms_url, changelogs: changelogs }, function (response) {
                 console.log(response);
             });
         }
