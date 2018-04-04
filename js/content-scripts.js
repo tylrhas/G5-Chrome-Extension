@@ -1,3 +1,15 @@
+var url = window.location.href
+splitUrl = url.split("/");
+
+if(splitUrl[2] === 'g5-hub.herokuapp.com' && splitUrl[splitUrl.length -1] === 'updatables'){
+    var s = document.createElement('script');
+    s.src = chrome.extension.getURL('js/injected_scripts/sync-all.js');
+    (document.head || document.documentElement).appendChild(s);
+    s.onload = function () {
+        s.parentNode.removeChild(s);
+    };
+}
+
 chrome.extension.onMessage.addListener(function (msg, sender, sendResponse) {
     console.log(msg);
     if (msg.action == 'open_dialog_box') {
@@ -59,16 +71,21 @@ chrome.extension.onMessage.addListener(function (msg, sender, sendResponse) {
             }
         }
     }
+    else if (msg.action == 'add_sync_all') {
+        console.log('woot! Woot!');
+        sendResponse({ farewell: "goodbye" });
+
+    }
 });
 
 
 //script for hub updater
-if (window.location.host == "g5-hub.herokuapp.com") {
-    //check if there are query vars
-    if (QueryStringToJSON() != null) {
-        replaceData(QueryStringToJSON());
-    }
-}
+// if (window.location.host == "g5-hub.herokuapp.com") {
+//     //check if there are query vars
+//     if (QueryStringToJSON() != null) {
+//         replaceData(QueryStringToJSON());
+//     }
+// }
 
 // Read a page's GET URL variables and return them as an associative array.
 function QueryStringToJSON() {

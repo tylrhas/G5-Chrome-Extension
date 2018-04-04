@@ -27,6 +27,7 @@ $('#search').click(hubSearch);
 $('#googleCID').click(googleCID);
 $('#chatmeterCSV').click(chatmeterCSV);
 
+
 //SEO Click Listeners
 $('#seo_updater').click(seo_updater);
 $('#structured_data').click(structured_data);

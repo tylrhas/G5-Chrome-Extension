@@ -29,6 +29,7 @@
 
   "web_accessible_resources": [
     "js/injected_scripts/wysiwyg-script.js", 
-    "js/injected_scripts/changelog-check.js"
+    "js/injected_scripts/changelog-check.js",
+    "js/injected_scripts/sync-all.js"
   ]
 }

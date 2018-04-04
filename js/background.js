@@ -79,11 +79,6 @@ chrome.webRequest.onCompleted.addListener(function (details) {
         }
 
     }
-    else if (splitUrl[2] === 'g5-hub.herokuapp.com' && splitUrl[splitUrl.length -1] === 'updatables') {
-        //inject the sync all button
-        console.log('We are on the right page')
-        
-    }
 }, { urls: ["<all_urls>"] });
 
 function injectWidgetJS (widgetSlug, details) {
