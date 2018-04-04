@@ -8,6 +8,11 @@ if(splitUrl[2] === 'g5-hub.herokuapp.com' && splitUrl[splitUrl.length -1] === 'u
     s.onload = function () {
         s.parentNode.removeChild(s);
     };
+} else if (splitUrl[2] === 'g5-hub.herokuapp.com' && splitUrl[splitUrl.length -1] !== 'updatables') {
+ //check if there are query vars
+ if (QueryStringToJSON() != null) {
+    replaceData(QueryStringToJSON());
+}
 }
 
 chrome.extension.onMessage.addListener(function (msg, sender, sendResponse) {
@@ -78,14 +83,6 @@ chrome.extension.onMessage.addListener(function (msg, sender, sendResponse) {
     }
 });
 
-
-//script for hub updater
-// if (window.location.host == "g5-hub.herokuapp.com") {
-//     //check if there are query vars
-//     if (QueryStringToJSON() != null) {
-//         replaceData(QueryStringToJSON());
-//     }
-// }
 
 // Read a page's GET URL variables and return them as an associative array.
 function QueryStringToJSON() {
