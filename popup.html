@@ -10,7 +10,7 @@
 <body style="width: 500px">
   <div class="row titlerow">
     <div class="container">
-      <h4>G5 Bookmarklets</h4>
+      <h4>G5 Chrome Extension</h4>
     </div>
   </div>
   <div class="col-xs-4 no-padding">
@@ -22,7 +22,7 @@
         <a id="seo_tab" data-toggle="tab" href="#seo_content">SEO</a>
       </li>
       <li>
-        <a data-toggle="tab" href="#dev">Dev/Support</a>
+        <a data-toggle="tab" href="#dev">Support</a>
       </li>
       <li>
         <a data-toggle="tab" href="#settings">Settings</a>
@@ -55,9 +55,6 @@
         <button class="btn" data-toggle="modal" data-target="#exampleModal">Hub Bulk Updater</button>
       </div>
       <div class="row">
-        <button class="btn" id="changelogs">View Changelogs</button>
-      </div>
-      <div class="row">
         <button class="btn" id="googleCID">Get Google CID</button>
       </div>
       <div class="row">
@@ -66,7 +63,7 @@
     </div>
     <div id="seo_content" class="tab-pane fade in">
       <div class="row">
-        <button class="btn" id="seo">SEO Updater</button>
+        <button class="btn" id="seo_updater">SEO Updater</button>
       </div>
       <div class="row">
         <button class="btn" id="structured_data">Structured Data</button>
@@ -75,6 +72,9 @@
     <div id="dev" class="tab-pane fade in">
       <div class="row">
         <button class="btn" id="sidekiq">Open Sidekiq</button>
+      </div>
+      <div class="row">
+        <button class="btn" id="changelogs">View Changelogs</button>
       </div>
       <div class="row">
         <button class="btn" id="transfer">Asset Downloader (BETA)</button>
@@ -128,12 +128,12 @@
     </div>
   </div>
 
-  <script type="text/javascript" src="/scripts/jquery-3.2.1.min.js"></script>
-  <script src="/scripts/jquery.csv-0.71.min.js"></script>
+  <script type="text/javascript" src="/js/popup/popup_ui/jquery-3.2.1.min.js"></script>
+  <script src="/js/popup/popup_ui/jquery.csv-0.71.min.js"></script>
   <script type="text/javascript" src="/bootstrap/popper.js"></script>
   <script type="text/javascript" src="/bootstrap/bootstrap.min.js"></script>
-  <script src="/scripts/papaparse.min.js"></script>
-  <script type="text/javascript" src="popup.js"></script>
+  <script src="/js/popup/popup_ui/papaparse.min.js"></script>
+  <script type="module" src="popup.js"></script>
 </body>
 
 </html>

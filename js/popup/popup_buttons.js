@@ -1,0 +1,12 @@
+//event listeners
+document.getElementById('hubpoi').addEventListener('click', hub_poi);
+document.getElementById('redirects').addEventListener('click', redirects);
+document.getElementById('wysiwyg').addEventListener('click', wysiwyg);
+document.getElementById('seo').addEventListener('click', seo);
+document.getElementById('structured_data').addEventListener('click', structured_data);
+document.getElementById('sidekiq').addEventListener('click', sidekiq);
+document.getElementById('search').addEventListener('click', hubSearch);
+document.getElementById('transfer').addEventListener('click', transfer);
+document.getElementById('changelogs').addEventListener('click', changelogs);
+document.getElementById('googleCID').addEventListener('click', googleCID);
+document.getElementById('chatmeterCSV').addEventListener('click', chatmeterCSV);

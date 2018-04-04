@@ -1,20 +1,26 @@
-//TODO
-//Fix the bug on save and then save and exit where it multiples the buttons by 2 
+var url = window.location.href
+splitUrl = url.split("/");
+
+if(splitUrl[2] === 'g5-hub.herokuapp.com' && splitUrl[splitUrl.length -1] === 'updatables'){
+    var s = document.createElement('script');
+    s.src = chrome.extension.getURL('js/injected_scripts/sync-all.js');
+    (document.head || document.documentElement).appendChild(s);
+    s.onload = function () {
+        s.parentNode.removeChild(s);
+    };
+} else if (splitUrl[2] === 'g5-hub.herokuapp.com' && splitUrl[splitUrl.length -1] !== 'updatables') {
+ //check if there are query vars
+ if (QueryStringToJSON() != null) {
+    replaceData(QueryStringToJSON());
+}
+}
+
 chrome.extension.onMessage.addListener(function (msg, sender, sendResponse) {
     console.log(msg);
     if (msg.action == 'open_dialog_box') {
         sendResponse({ farewell: "goodbye" });
         var s = document.createElement('script');
-        s.src = chrome.extension.getURL('scripts/wysiwyg-script.js');
-        (document.head || document.documentElement).appendChild(s);
-        s.onload = function () {
-            s.parentNode.removeChild(s);
-        };
-    }
-    //open the hub 
-    else if (msg.action == 'open_hub') {
-        var s = document.createElement('script');
-        s.src = chrome.extension.getURL('functions/open_hub.js');
+        s.src = chrome.extension.getURL('js/injected_scripts/wysiwyg-script.js');
         (document.head || document.documentElement).appendChild(s);
         s.onload = function () {
             s.parentNode.removeChild(s);
@@ -24,7 +30,7 @@ chrome.extension.onMessage.addListener(function (msg, sender, sendResponse) {
         currentURL = window.location.href;
         // https://stackoverflow.com/questions/3689423/google-chrome-plugin-how-to-get-domain-from-url-tab-url
         domain = currentURL.match(/^[\w-]+:\/{2,}\[?[\w\.:-]+\]?(?::[0-9]*)?/)[0];
-        splitURL = currentURL.split('/');
+        var splitURL = currentURL.split('/');
         cmsApp = splitURL[2].split('.')[0]
         urn = msg.urn;
         hubURL = "https://g5-hub.herokuapp.com/admin/clients/" + urn;
@@ -37,10 +43,20 @@ chrome.extension.onMessage.addListener(function (msg, sender, sendResponse) {
         hub = '<a href="' + hubURL + '" style="color:#fff !important;" target="_blank" class="btn" id="hub" >Hub</a>';
         sidekiq = '<a href="' + sidekiqURL + '" style="color:#fff !important;" target="_blank" class="btn">Sidekiq</a>';
         heroku = '<a href="' + herokuURL + '" style="color:#fff !important;" target="_blank" id="heroku" class="btn">Heroku</a>';
+        console.log('loading')
+        var s = document.createElement('script');
+        s.src = chrome.extension.getURL('js/injected_scripts/changelog-check.js');
+        (document.head || document.documentElement).appendChild(s);
+        s.onload = function () {
+            s.parentNode.removeChild(s);
+        };
+
+
         //check if the buttons are placed already
         if (!document.getElementById('hub')) {
             document.getElementsByClassName('version')[0].insertAdjacentHTML('afterbegin', hub);
             document.getElementsByClassName('version')[0].insertAdjacentHTML('afterbegin', sidekiq);
+
             if (msg.changelogs) {
                 document.getElementsByClassName('version')[0].insertAdjacentHTML('afterbegin', changelogs);
             }
@@ -60,15 +76,13 @@ chrome.extension.onMessage.addListener(function (msg, sender, sendResponse) {
             }
         }
     }
+    else if (msg.action == 'add_sync_all') {
+        console.log('woot! Woot!');
+        sendResponse({ farewell: "goodbye" });
+
+    }
 });
 
-//script for hub updater
-if (window.location.host == "g5-hub.herokuapp.com") {
-    //check if there are query vars
-    if (QueryStringToJSON() != null) {
-        replaceData(QueryStringToJSON());
-    }
-}
 
 // Read a page's GET URL variables and return them as an associative array.
 function QueryStringToJSON() {
