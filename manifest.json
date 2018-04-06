@@ -10,7 +10,8 @@
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["js/content-scripts.js"]
+      "js": ["js/content-scripts.js"],
+      "run_at": "document_idle"
     }
   ],
   "permissions": [
@@ -30,6 +31,7 @@
   "web_accessible_resources": [
     "js/injected_scripts/wysiwyg-script.js", 
     "js/injected_scripts/changelog-check.js",
-    "js/injected_scripts/sync-all.js"
+    "js/injected_scripts/sync-all.js",
+    "js/injected_scripts/hub-poi.js"
   ]
 }

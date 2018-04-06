@@ -1,19 +1,28 @@
 var url = window.location.href
 splitUrl = url.split("/");
 
-if(splitUrl[2] === 'g5-hub.herokuapp.com' && splitUrl[splitUrl.length -1] === 'updatables'){
+if (splitUrl[2] === 'g5-hub.herokuapp.com' && splitUrl[splitUrl.length - 1] === 'updatables') {
     var s = document.createElement('script');
     s.src = chrome.extension.getURL('js/injected_scripts/sync-all.js');
     (document.head || document.documentElement).appendChild(s);
     s.onload = function () {
         s.parentNode.removeChild(s);
     };
-} else if (splitUrl[2] === 'g5-hub.herokuapp.com' && splitUrl[splitUrl.length -1] !== 'updatables') {
- //check if there are query vars
- if (QueryStringToJSON() != null) {
-    replaceData(QueryStringToJSON());
-}
-}
+} else if (splitUrl[2] === 'g5-hub.herokuapp.com' && splitUrl[splitUrl.length - 1] !== 'edit') {
+    //check if there are query vars
+    if (QueryStringToJSON() != null) {
+        replaceData(QueryStringToJSON());
+    }
+} else if (splitUrl[2] === 'g5-hub.herokuapp.com' && splitUrl[splitUrl.length - 1] === 'edit') {
+
+    https://stackoverflow.com/questions/17567624/pass-a-parameter-to-a-content-script-injected-using-chrome-tabs-executescript?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
+    var s = document.createElement('script');
+    s.src = chrome.extension.getURL('js/injected_scripts/hub-poi.js');
+    (document.head || document.documentElement).appendChild(s);
+    s.onload = function () {
+        s.parentNode.removeChild(s);
+    }
+ }
 
 chrome.extension.onMessage.addListener(function (msg, sender, sendResponse) {
     console.log(msg);
@@ -85,8 +94,11 @@ chrome.extension.onMessage.addListener(function (msg, sender, sendResponse) {
 
 
 // Read a page's GET URL variables and return them as an associative array.
-function QueryStringToJSON() {
+function QueryStringToJSON () {
     var pairs = location.search.slice(1).split('&');
+    if(pairs == [""] ){
+        return null;
+    } else {
 
     var result = {};
     pairs.forEach(function (pair) {
@@ -96,8 +108,9 @@ function QueryStringToJSON() {
 
     return JSON.parse(JSON.stringify(result));
 }
+}
 
-function replaceData(data) {
+function replaceData (data) {
     for (var key in data) {
         if (data.hasOwnProperty(key)) {
             placeData(key, data[key]);
@@ -106,7 +119,7 @@ function replaceData(data) {
     }
 }
 
-function placeData(id, val) {
+function placeData (id, val) {
     document.getElementById(id).value = val;
     //$('#submit-location-form').trigger('click');
 }
