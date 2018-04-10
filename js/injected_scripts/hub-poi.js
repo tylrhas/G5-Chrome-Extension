@@ -12,10 +12,10 @@ $('#shopping_accordion').prepend('<textarea class="poi_activities"></textarea><b
 $('button.poi_activities').click(function () {
   //get location names and split on linebreak
   let locationNames = $('textarea.poi_activities').val().split(/\r?\n/)
-  getLocations(locationNames)
+  getLocations(locationNames, 'activities')
 })
 
-function getLocations(locationNames) {
+function getLocations(locationNames, poiCategory) {
   let locationLatitude = $("#location_latitude").val()
   let locationLongitude = $("#location_longitude").val()
   let searchRadius = 4828.03
@@ -25,12 +25,12 @@ function getLocations(locationNames) {
 
     $.get(url, function (data) {
       let locationPlaceId = data.results[0].place_id
-      getLocationInfo(locationPlaceId)
+      getLocationInfo(locationPlaceId, poiCategory)
     })
 }
 }
 
-function getLocationInfo (locationPlaceId) {
+function getLocationInfo (locationPlaceId, poiCategory) {
   let url = 'https://maps.googleapis.com/maps/api/place/details/json?placeid=' + locationPlaceId + '&key=' + apiKey
 
   $.get(url, function (data) {
@@ -46,6 +46,23 @@ function getLocationInfo (locationPlaceId) {
     let locationLong = data.result.geometry.location.lng
 
     //find the next open field 
+    let inputs = $('.poi_'+ poiCategory + 'input.poi_place_id')
 
+    for(i = 0; i < inputs.length; i++){
+      if(inputs[i].val() ===''){
+        // fill in the location becasue it is empty
+        $('.poi_'+ poiCategory + 'input.poi_place_id')[i].val() = locationPlaceId
+        $('.poi_'+ poiCategory + 'input.poi_name')[i].val() = locationName
+        $('.poi_'+ poiCategory + 'input.poi_phone_number')[i].val() = locationPhone
+        $('.poi_'+ poiCategory + 'input.poi_website')[i].val() = locationWebsite
+        $('.poi_'+ poiCategory + 'input.poi_google_map_url')[i].val() = locationMapsUrl
+        $('.poi_'+ poiCategory + 'input.poi_address')[i].val() = locationAddress
+        $('.poi_'+ poiCategory + 'input.poi_city')[i].val() = locationCity
+        $('.poi_'+ poiCategory + 'input.poi_state')[i].val() = locationState
+        $('.poi_'+ poiCategory + 'input.poi_postal_code')[i].val() = locationZip
+        $('.poi_'+ poiCategory + 'input.poi_latitude')[i].val() = locationLat
+        $('.poi_'+ poiCategory + 'input.poi_longitude')[i].val() = locationLong
+      }
+    }
   })
 }
