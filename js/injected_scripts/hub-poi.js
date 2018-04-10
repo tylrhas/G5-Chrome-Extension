@@ -4,29 +4,34 @@ $('#food_drink_accordion').prepend('<textarea class="poi_activities"></textarea>
 $('#schools_community_accordion').prepend('<textarea class="poi_activities"></textarea><button class="poi_activities">Submit</button>')
 $('#shopping_accordion').prepend('<textarea class="poi_activities"></textarea><button class="poi_activities">Submit</button>')
 
+// Add these CSS rules for the buttons
+// position: relative;
+// top: -20px;
+// margin-left: 10px;
+
 $('button.poi_activities').click(function () {
   //get location names and split on linebreak
-  locationNames = $('textarea.poi_activities').val().split(/\r?\n/)
+  let locationNames = $('textarea.poi_activities').val().split(/\r?\n/)
   getLocations(locationNames)
 })
 
-getLocations(locationNames){
+function getLocations(locationNames) {
   let locationLatitude = $("#location_latitude").val()
   let locationLongitude = $("#location_longitude").val()
   let searchRadius = 4828.03
 
-  for (i = 0 ; i < locationNames.length; i++) {
+  for (i = 0; i < locationNames.length; i++) {
     let url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + locationLatitude + "," + locationLongitude + "&radius=" + searchRadius + "&name=" + locationName[i] + "&rankby=prominence&key=" + apiKey
 
     $.get(url, function (data) {
       let locationPlaceId = data.results[0].place_id
       getLocationInfo(locationPlaceId)
-    }
+    })
 }
 }
 
 function getLocationInfo (locationPlaceId) {
-  let url = 'https://maps.googleapis.com/maps/api/place/details/json?placeid='+ locationPlaceId+ '&key=' + apiKey
+  let url = 'https://maps.googleapis.com/maps/api/place/details/json?placeid=' + locationPlaceId + '&key=' + apiKey
 
   $.get(url, function (data) {
     let locationName = data.result.name
@@ -42,5 +47,5 @@ function getLocationInfo (locationPlaceId) {
 
     //find the next open field 
 
-  }
+  })
 }
