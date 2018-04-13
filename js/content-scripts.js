@@ -2,12 +2,25 @@ var url = window.location.href
 splitUrl = url.split("/");
 
 if (splitUrl[2] === 'g5-hub.herokuapp.com' && splitUrl[splitUrl.length - 1] === 'updatables') {
+    // chrome.runtime.sendMessage({action: "getMapsApiKey"}, function(response) {
+    //     console.log(response);
+    // });
+      //get the input value
+  chrome.storage.sync.get(['poikey'], function (obj) {
+    console.log(obj.poikey);
+    var ApiKey = '<script> var chromeMapsAPIKey =' + obj.poikey + '</script>'
+    (document.head || document.documentElement).appendChild(ApiKey);
+    s.onload = function () {
+        s.parentNode.removeChild(ApiKey);
+    };
+
     var s = document.createElement('script');
     s.src = chrome.extension.getURL('js/injected_scripts/sync-all.js');
     (document.head || document.documentElement).appendChild(s);
     s.onload = function () {
         s.parentNode.removeChild(s);
     };
+  });
 } else if (splitUrl[2] === 'g5-hub.herokuapp.com' && splitUrl[splitUrl.length - 1] !== 'edit') {
     //check if there are query vars
     if (QueryStringToJSON() != null) {
