@@ -132,14 +132,30 @@ chrome.extension.onMessage.addListener(function (msg, sender, sendResponse) {
     }
     else if (msg.action == 'inject_delete_all') {
         console.log('injecting')
-        setTimeout(function check_trigger (chrome) {
-            var s = document.createElement('script')
-            s.src = chrome.extension.getURL('js/injected_scripts/delete_all_gallery.js')
-            (document.head || document.documentElement).appendChild(s)
-            s.onload = function () {
-                s.parentNode.removeChild(s)
+        var checkExist = setInterval(function () {
+            if ($('.photo-gallery-preview').length) {
+                console.log("Exists!");
+                clearInterval(checkExist);
+                //    var s = document.createElement('script')
+                //     s.src = chrome.extension.getURL('js/injected_scripts/delete_all_gallery.js')
+                //     (document.head || document.documentElement).appendChild(s)
+                //     s.onload = function () {
+                //         s.parentNode.removeChild(s)
+                //     }
+                $('.cloudinary-upload').after('<a href="#" class="btn red delete-all">Delete All</a>')
+
+                $('.delete-all').click(function () {
+                    console.log('removing all ')
+                    $('.form-field-url input[type=text]').val("")
+                    $('.photo-gallery-preview .photo').html('<i class="fa fa-plus"></i>')
+                    $('.photo-gallery-preview .photo').removeClass('photo-real')
+                    $('.photo-gallery-preview .photo').addClass('photo-placeholder')
+                    // $('.photo-real img').removeAttr('src')
+                    $('.img-thumbnail-preview img').attr('src', 'http://placehold.it/100x100')
+                    $('.form-field-alt_tag input').val("")
+                })
             }
-        }, 3000);
+        }, 1000, chrome); // check every 100ms
     }
 });
 
