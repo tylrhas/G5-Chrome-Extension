@@ -25,7 +25,7 @@ export function chatmeterCSV() {
         var locations = data.locations;
         var i;
             for (i = 0; i < locations.length; i++) {
-              if(locations[i].status == "Pending" || locations[i].status == "Live" ){
+              if(locations[i].status == "Pending"){
                 //location is pending
               let hub_location = {};
               hub_location.ClientLocationId = locations[i].urn
