@@ -3,14 +3,15 @@
 
   "name": "G5 Bookmarklets",
   "description": "Home of Bookmarklets for the G5 WIS Team",
-  "version": "2.0",
+  "version": "2.2",
   "icons": {
     "48": "icon.png"
   },
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["js/content-scripts.js"]
+      "js": ["/js/popup/popup_ui/jquery-3.2.1.min.js", "js/content-scripts.js"],
+      "run_at": "document_idle"
     }
   ],
   "permissions": [
@@ -30,6 +31,8 @@
   "web_accessible_resources": [
     "js/injected_scripts/wysiwyg-script.js", 
     "js/injected_scripts/changelog-check.js",
-    "js/injected_scripts/sync-all.js"
+    "js/injected_scripts/sync-all.js",
+    "js/injected_scripts/hub-poi.js",
+    "js/injected_scripts/delete_all_gallery.js"
   ]
 }

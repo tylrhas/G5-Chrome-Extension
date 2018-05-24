@@ -1,18 +1,67 @@
 var url = window.location.href
 splitUrl = url.split("/");
 
-if(splitUrl[2] === 'g5-hub.herokuapp.com' && splitUrl[splitUrl.length -1] === 'updatables'){
-    var s = document.createElement('script');
-    s.src = chrome.extension.getURL('js/injected_scripts/sync-all.js');
-    (document.head || document.documentElement).appendChild(s);
+if (splitUrl[2] === 'g5-hub.herokuapp.com' && splitUrl[splitUrl.length - 1] === 'updatables') {
+
+    var s = document.createElement('script')
+    s.src = chrome.extension.getURL('js/injected_scripts/sync-all.js')
+        (document.head || document.documentElement).appendChild(s)
     s.onload = function () {
         s.parentNode.removeChild(s);
-    };
-} else if (splitUrl[2] === 'g5-hub.herokuapp.com' && splitUrl[splitUrl.length -1] !== 'updatables') {
- //check if there are query vars
- if (QueryStringToJSON() != null) {
-    replaceData(QueryStringToJSON());
-}
+    }
+} else if (splitUrl[2] === 'g5-hub.herokuapp.com' && splitUrl[splitUrl.length - 1] !== 'edit') {
+    //check if there are query vars
+    if (QueryStringToJSON() != null) {
+        replaceData(QueryStringToJSON());
+    }
+} else if (splitUrl[2] === 'g5-hub.herokuapp.com' && splitUrl[splitUrl.length - 1] === 'edit') {
+
+    chrome.storage.sync.get(['poikey'], function (obj) {
+
+        var chromeMapsAPIKey = obj.poikey
+
+        $('#activities_accordion').prepend('<textarea class="poi_activities"></textarea><button class="poi_activities">Submit</button>')
+        $('#entertainment_accordion').prepend('<textarea class="poi_activities"></textarea><button class="poi_entertainment">Submit</button>')
+        $('#food_drink_accordion').prepend('<textarea class="poi_activities"></textarea><button class="poi_food">Submit</button>')
+        $('#schools_community_accordion').prepend('<textarea class="poi_activities"></textarea><button class="poi_schools">Submit</button>')
+        $('#shopping_accordion').prepend('<textarea class="poi_activities"></textarea><button class="poi_shopping">Submit</button>')
+
+        // Add these CSS rules for the buttons
+        // position: relative;
+        // top: -20px;
+        // margin-left: 10px;
+
+        $('button.poi_activities').click(function () {
+            event.preventDefault()
+            //get location names and split on linebreak
+            let locationNames = $('textarea.poi_activities').val().split(/\r?\n/)
+            getLocations(locationNames, 'activities', chromeMapsAPIKey)
+        })
+        $('button.poi_entertainment').click(function () {
+            event.preventDefault()
+            //get location names and split on linebreak
+            let locationNames = $('textarea.poi_activities').val().split(/\r?\n/)
+            getLocations(locationNames, 'entertainment', chromeMapsAPIKey)
+        })
+        $('button.poi_food').click(function () {
+            event.preventDefault()
+            //get location names and split on linebreak
+            let locationNames = $('textarea.poi_activities').val().split(/\r?\n/)
+            getLocations(locationNames, 'food_drink', chromeMapsAPIKey)
+        })
+        $('button.poi_schools').click(function () {
+            event.preventDefault()
+            //get location names and split on linebreak
+            let locationNames = $('textarea.poi_activities').val().split(/\r?\n/)
+            getLocations(locationNames, 'schools_community', chromeMapsAPIKey)
+        })
+        $('button.poi_shopping').click(function () {
+            event.preventDefault()
+            //get location names and split on linebreak
+            let locationNames = $('textarea.poi_activities').val().split(/\r?\n/)
+            getLocations(locationNames, 'shopping', chromeMapsAPIKey)
+        })
+    })
 }
 
 chrome.extension.onMessage.addListener(function (msg, sender, sendResponse) {
@@ -81,23 +130,61 @@ chrome.extension.onMessage.addListener(function (msg, sender, sendResponse) {
         sendResponse({ farewell: "goodbye" });
 
     }
+    else if (msg.action == 'inject_delete_all') {
+        console.log('injecting')
+        var checkExist = setInterval(function () {
+            if ($('.photo-gallery-preview').length) {
+                console.log("Exists!");
+                clearInterval(checkExist);
+                //    var s = document.createElement('script')
+                //     s.src = chrome.extension.getURL('js/injected_scripts/delete_all_gallery.js')
+                //     (document.head || document.documentElement).appendChild(s)
+                //     s.onload = function () {
+                //         s.parentNode.removeChild(s)
+                //     }
+                if(!$('.delete-all').length){
+                $('.cloudinary-upload').after('<a href="#" class="btn red delete-all">Delete All</a>')
+
+                $('.delete-all').click(function () {
+                    $('.photo-field').each(function(i, el){
+                        console.log('removing')
+                        $(this).find('.form-field-url input[type=text]').val("")
+                        $(this).find('.form-field-alt_tag input[type=text]').val("")
+                        $(this).find('.cloudinary-remove-btn').click()
+                        $(this).find('.photo-gallery-preview .photo').addClass('photo-placeholder')
+                        $(this).find('.img-thumbnail-preview img').attr('src', 'http://placehold.it/100x100')
+                        $(this).find('.form-field-alt_tag input').focus()
+                        $(this).find('.form-field-alt_tag input').keyup()
+                    })
+                    $('.photo-gallery-preview .photo').html('<i class="fa fa-plus"></i>')
+                    $('.photo-gallery-preview .photo').removeClass('photo-real')
+                    console.log('removing all ')
+                })
+            }
+            }
+        }, 1000, chrome); // check every 100ms
+    }
 });
 
 
 // Read a page's GET URL variables and return them as an associative array.
-function QueryStringToJSON() {
+function QueryStringToJSON () {
     var pairs = location.search.slice(1).split('&');
+    if (pairs == [""]) {
+        return null;
+    } else {
 
-    var result = {};
-    pairs.forEach(function (pair) {
-        pair = pair.split('=');
-        result[pair[0]] = decodeURIComponent(pair[1] || '');
-    });
+        var result = {};
+        pairs.forEach(function (pair) {
+            pair = pair.split('=');
+            result[pair[0]] = decodeURIComponent(pair[1] || '');
+        });
 
-    return JSON.parse(JSON.stringify(result));
+        return JSON.parse(JSON.stringify(result));
+    }
 }
 
-function replaceData(data) {
+function replaceData (data) {
     for (var key in data) {
         if (data.hasOwnProperty(key)) {
             placeData(key, data[key]);
@@ -106,7 +193,59 @@ function replaceData(data) {
     }
 }
 
-function placeData(id, val) {
+function placeData (id, val) {
     document.getElementById(id).value = val;
     //$('#submit-location-form').trigger('click');
+}
+
+function getLocations (locationNames, poiCategory, chromeMapsAPIKey) {
+    let locationLatitude = $("#location_latitude").val()
+    let locationLongitude = $("#location_longitude").val()
+    let searchRadius = 4828.03
+
+    for (i = 0; i < locationNames.length; i++) {
+        let url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + locationLatitude + "," + locationLongitude + "&radius=" + searchRadius + "&name=" + locationNames[i] + "&rankby=prominence&key=" + chromeMapsAPIKey
+        console.log(url)
+        $.get(url, function (data) {
+            let locationPlaceId = data.results[0].place_id
+            getLocationInfo(locationPlaceId, poiCategory, chromeMapsAPIKey)
+        })
+    }
+}
+
+function getLocationInfo (locationPlaceId, poiCategory, chromeMapsAPIKey) {
+    let url = 'https://maps.googleapis.com/maps/api/place/details/json?placeid=' + locationPlaceId + '&key=' + chromeMapsAPIKey
+
+    $.get(url, function (data) {
+        let locationName = data.result.name
+        let locationPhone = data.result.formatted_phone_number
+        let locationWebsite = data.result.website
+        let locationMapsUrl = data.result.url
+        let locationAddress = data.result.formatted_address.split(',')[0]
+        let locationCity = data.result.formatted_address.split(',')[1]
+        let locationState = data.result.formatted_address.split(',')[2].split(/\s+/)[1]
+        let locationZip = data.result.formatted_address.split(',')[2].split(/\s+/)[2]
+        let locationLat = data.result.geometry.location.lat
+        let locationLong = data.result.geometry.location.lng
+
+        //find the next open field 
+        let inputs = $('#' + poiCategory + '_accordion input.poi_place_id')
+        for (i = 0; i < inputs.length; i++) {
+            if ($(inputs.eq(i)).val() == '') {
+                // fill in the location becasue it is empty
+                $('#' + poiCategory + '_accordion input.poi_place_id').eq(i).val(locationPlaceId)
+                $('#' + poiCategory + '_accordion input.poi_name').eq(i).val(locationName)
+                $('#' + poiCategory + '_accordion input.poi_phone_number').eq(i).val(locationPhone)
+                $('#' + poiCategory + '_accordion input.poi_website').eq(i).val(locationWebsite)
+                $('#' + poiCategory + '_accordion input.poi_google_map_url').eq(i).val(locationMapsUrl)
+                $('#' + poiCategory + '_accordion input.poi_address').eq(i).val(locationAddress)
+                $('#' + poiCategory + '_accordion input.poi_city').eq(i).val(locationCity)
+                $('#' + poiCategory + '_accordion input.poi_state').eq(i).val(locationState)
+                $('#' + poiCategory + '_accordion input.poi_postal_code').eq(i).val(locationZip)
+                $('#' + poiCategory + '_accordion input.poi_latitude').eq(i).val(locationLat)
+                $('#' + poiCategory + '_accordion input.poi_longitude').eq(i).val(locationLong)
+                break
+            }
+        }
+    })
 }

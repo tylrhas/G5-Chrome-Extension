@@ -46,10 +46,13 @@ $(function () {
     var poikey = $('#poikey').val();
     var transferURL = $('#transferURL').val();
     var def_user = $('#def_user').val();
+    var cm_pending = $('#cm_pending:checked').val()?true:false
+    var cm_live = $('#cm_live:checked').val()?true:false
+
     console.log(def_user);
 
     // Save it using the Chrome extension storage API.
-    chrome.storage.sync.set({ 'poikey': poikey, 'transferURL': transferURL, 'def_user': def_user }, function () {
+    chrome.storage.sync.set({ 'poikey': poikey, 'transferURL': transferURL, 'def_user': def_user, 'cm_pending': cm_pending, 'cm_live': cm_live }, function () {
       // Notify that we saved.
       console.log('Settings saved');
       $('#save').addClass('btn-success');
@@ -60,10 +63,17 @@ $(function () {
   });
 
   //get the input value
-  chrome.storage.sync.get(['poikey', 'transferURL', 'def_user'], function (obj) {
+  chrome.storage.sync.get(['poikey', 'transferURL', 'def_user','cm_pending','cm_live'  ], function (obj) {
     console.log(obj);
     $('#poikey').val(obj.poikey);
     $('#transferURL').val(obj.transferURL);
+
+    if(obj.cm_pending){
+      $("#cm_pending").prop('checked', true);
+    }
+    if(obj.cm_live){
+      $("#cm_live").prop('checked', true);
+    }
 
     //set the default active tab
     if (obj.def_user == 'SEO') {

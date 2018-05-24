@@ -89,6 +89,13 @@ function injectWidgetJS (widgetSlug, details) {
             });
         });
     }
+    else if(widgetSlug == 'gallery') {
+        chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+            chrome.tabs.sendMessage(tabs[0].id, { action: "inject_delete_all" }, function (response) {
+                console.log(response);
+            });
+        });
+    }
 }
 
 function isHTMLWidget (widgetSlug) {
