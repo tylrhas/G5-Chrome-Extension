@@ -31,7 +31,6 @@ function createChatmeterCSV (tabs) {
             //location is pending
             let hub_location = {};
             hub_location.ClientLocationId = locations[i].urn
-            hub_location.ClientName = client_Name
             hub_location.BusinessName = locations[i].name
             hub_location.street_address_1 = locations[i].street_address_1
             hub_location.Suite = locations[i].street_address_2
@@ -43,7 +42,20 @@ function createChatmeterCSV (tabs) {
             hub_location.AlternatePhone = ''
             hub_location.WebsiteUrl = locations[i].home_page_url
             hub_location.PrimaryCategory = ''
+            hub_location.Groups = ''
+            hub_location.Keywords = ''
+            hub_location.BusinessSearchName = ''
             hub_location.AuditOnly = 'FALSE'
+            hub_location.HideAddress = ''
+            hub_location.Description = ''
+            hub_location.FaxNumber = ''
+            hub_location.BusinessEmail = ''
+            hub_location.BusinessOwner = ''
+            hub_location.Product = ''
+            hub_location.Brands = ''
+            hub_location.YearsInBusiness = ''
+            hub_location.PaymentTypes = ''
+            hub_location.Hours = locations[i].office_hours.replace(/<\/div>/g,";").replace(/<(?:.|\n)*?>/gm, '').replace(/y:/gm, 'y')
             csv_object.push(hub_location);
           }
         }
