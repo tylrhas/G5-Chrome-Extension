@@ -90,7 +90,7 @@ chrome.extension.onMessage.addListener(function (msg, sender, sendResponse) {
         sidekiqURL = domain + '/sidekiq/busy?poll=true';
         herokuURL = 'https://dashboard.heroku.com/apps/' + cmsApp;
         hub = '<a href="' + hubURL + '" style="color:#fff !important;" target="_blank" class="btn" id="hub" >Hub</a>';
-        sidekiq = '<a href="' + sidekiqURL + '" style="color:#fff !important;" target="_blank" class="btn">Sidekiq</a>';
+        sidekiq = '<a href="' + sidekiqURL + '" style="color:#fff !important;" target="_blank" class="btn" id="sidekiq">Sidekiq</a>';
         heroku = '<a href="' + herokuURL + '" style="color:#fff !important;" target="_blank" id="heroku" class="btn">Heroku</a>';
         console.log('loading')
         var s = document.createElement('script');
