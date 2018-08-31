@@ -1,7 +1,7 @@
 //insert the button for html editor and then bind to the click of the button
 //check for cke to be defined
 checkCKE();
-function checkCKE() {
+function checkCKE () {
     if (document.getElementsByClassName("cke")[0] != null) {
         insertWYSIWYGButton();
     }
@@ -9,7 +9,7 @@ function checkCKE() {
         setTimeout(checkCKE.bind(null, null), 100);
     }
 }
-function insertWYSIWYGButton() {
+function insertWYSIWYGButton () {
     //check if WYSIWYG Button exists
     if ($(".cke_wysiwyg").length == 0) {
         console.log('button is not placed yet')
@@ -20,7 +20,7 @@ function insertWYSIWYGButton() {
         });
 
         //has not been placed yet so go ahead and place script
-        $(".cke_wysiwyg").click(function(){
+        $(".cke_wysiwyg").click(function () {
             // v2
             // Object.keys(CKEDITOR.instances).forEach(function(e,i){console.log(e,i,CKEDITOR.instances[e]);})
             /* global CKEDITOR, $ */
@@ -38,6 +38,9 @@ function insertWYSIWYGButton() {
 
                 // remove nbsp's
                 data = data.replace(/&nbsp;/g, ' ');
+                // remove LSEP
+                console.log(/[\u2028]/.test(data))
+                data = data.replace(/[\u2028]/g, ' ');
 
                 // set to jquery element - wrap it so we can get the inner html later
                 data = $("<div>" + data + "</div>");
@@ -53,7 +56,6 @@ function insertWYSIWYGButton() {
 
                 // set/save data
                 inst.setData(data.html());
-
             });
 
         });
