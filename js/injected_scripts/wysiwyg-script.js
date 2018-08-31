@@ -40,7 +40,9 @@ function insertWYSIWYGButton () {
                 data = data.replace(/&nbsp;/g, ' ');
                 // remove LSEP
                 console.log(/[\u2028]/.test(data))
-                data = data.replace(/[\u2028]/g, ' ');
+                data = data.replace(/[\u2028]/g, '');
+                data = data.replace(/[\u2028]/g, '');
+                data = data.find('div').remove()
 
                 // set to jquery element - wrap it so we can get the inner html later
                 data = $("<div>" + data + "</div>");
