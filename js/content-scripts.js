@@ -65,7 +65,7 @@ if (splitUrl[2] === 'g5-hub.herokuapp.com' && splitUrl[splitUrl.length - 1] === 
 }
 
 chrome.extension.onMessage.addListener(function (msg, sender, sendResponse) {
-    console.log(msg);
+    // console.log(msg);
     if (msg.action == 'open_dialog_box') {
         sendResponse({ farewell: "goodbye" });
         var s = document.createElement('script');
